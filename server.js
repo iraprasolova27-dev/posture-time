@@ -12,14 +12,24 @@ const PORT = process.env.PORT || 3000;
    POSTGRESQL
    ========================================= */
 
-const pool = new Pool({
-    host: process.env.DB_HOST || 'localhost',
-    port: Number(process.env.DB_PORT || 5432),
-    database: process.env.DB_NAME || 'posture_time',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '88215',
-    max: 10
-});
+const pool = new Pool(
+    process.env.DATABASE_URL
+        ? {
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: false
+            },
+            max: 10
+        }
+        : {
+            host: process.env.DB_HOST || 'localhost',
+            port: Number(process.env.DB_PORT || 5432),
+            database: process.env.DB_NAME || 'posture_time',
+            user: process.env.DB_USER || 'postgres',
+            password: process.env.DB_PASSWORD,
+            max: 10
+        }
+);
 
 pool.on('error', error => {
     console.error('PostgreSQL pool error:', error.message);
@@ -947,6 +957,6 @@ app.get('/lessons/:id', (req, res) => {
    ЗАПУСК
    ========================================= */
 
-app.listen(PORT, () => {
-    console.log(`Posture Time запущен: http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Posture Time запущен на порту ${PORT}`);
 });
