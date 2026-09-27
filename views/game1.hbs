@@ -133,6 +133,36 @@
             font-size: 14px;
         }
 
+.mobile-controls {
+    display: none;
+}
+
+.mobile-controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mobile-control {
+    width: 58px;
+    height: 58px;
+    border: 0;
+    border-radius: 18px;
+    background: #e4f1ff;
+    color: #2864a5;
+    font-size: 26px;
+    font-weight: 800;
+    box-shadow: 0 5px 12px rgba(40, 100, 165, .10);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-control:active {
+    transform: scale(.94);
+    background: #d4eaff;
+}
+
         @media (max-width: 650px) {
             .game-panel {
                 padding: 15px;
@@ -145,6 +175,17 @@
             .game-stats {
                 grid-template-columns: 1fr 1fr 1fr;
             }
+            .mobile-controls {
+    display: block;
+    margin-top: 14px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.mobile-control {
+    min-width: 58px;
+    min-height: 58px;
+}
         }
     </style>
 </head>
@@ -185,7 +226,21 @@
 
             <canvas id="snakeCanvas" width="700" height="450"></canvas>
 
-            <div class="game-info">
+<div class="mobile-controls" aria-label="Управление змейкой">
+    <div class="mobile-controls-row">
+        <button type="button" class="mobile-control" data-direction="up" aria-label="Вверх">▲</button>
+    </div>
+
+    <div class="mobile-controls-row">
+        <button type="button" class="mobile-control" data-direction="left" aria-label="Влево">◀</button>
+
+        <button type="button" class="mobile-control" data-direction="down" aria-label="Вниз">▼</button>
+
+        <button type="button" class="mobile-control" data-direction="right" aria-label="Вправо">▶</button>
+    </div>
+</div>
+
+<div class="game-info">
 
                 <div class="game-message" id="message">
                     Выбери направление и начинай!
@@ -598,6 +653,96 @@ pauseButton.addEventListener("click", function() {
 });
 
 restartButton.addEventListener("click", restartGame);
+
+
+/* ================================
+   УПРАВЛЕНИЕ НА ТЕЛЕФОНЕ
+   ================================ */
+
+document.querySelectorAll(".mobile-control").forEach(function (button) {
+
+    button.addEventListener("pointerdown", function (event) {
+
+        event.preventDefault();
+
+        const directionName = button.dataset.direction;
+
+        if (directionName === "up") {
+            changeDirection(0, -1);
+        }
+
+        if (directionName === "down") {
+            changeDirection(0, 1);
+        }
+
+        if (directionName === "left") {
+            changeDirection(-1, 0);
+        }
+
+        if (directionName === "right") {
+            changeDirection(1, 0);
+        }
+
+    });
+
+});
+
+
+/* Свайпы по игровому полю */
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+canvas.addEventListener("touchstart", function (event) {
+
+    if (!event.touches.length) return;
+
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+
+}, { passive: true });
+
+
+canvas.addEventListener("touchend", function (event) {
+
+    if (!event.changedTouches.length) return;
+
+    const touch = event.changedTouches[0];
+
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    const minSwipe = 25;
+
+    if (
+        Math.max(
+            Math.abs(deltaX),
+            Math.abs(deltaY)
+        ) < minSwipe
+    ) {
+        return;
+    }
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+
+        if (deltaX > 0) {
+            changeDirection(1, 0);
+        } else {
+            changeDirection(-1, 0);
+        }
+
+    } else {
+
+        if (deltaY > 0) {
+            changeDirection(0, 1);
+        } else {
+            changeDirection(0, -1);
+        }
+
+    }
+
+});
+
 
 resetGame();
 </script>
