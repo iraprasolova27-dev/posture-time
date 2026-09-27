@@ -450,13 +450,20 @@ app.post('/login', async (req, res) => {
 
         await ensureUserProgress(user.id);
 
-        req.session.userId = user.id;
-        req.session.userName = user.name;
-        req.session.userEmail = user.email;
-        req.session.userAvatar = user.avatar;
-        req.session.userRole = user.role;
+       req.session.userId = user.id;
+req.session.userName = user.name;
+req.session.userEmail = user.email;
+req.session.userAvatar = user.avatar;
+req.session.userRole = user.role;
 
-        res.redirect('/profile');
+req.session.save((error) => {
+    if (error) {
+        console.error('Ошибка сохранения сессии:', error);
+        return res.status(500).send('Не удалось сохранить сессию.');
+    }
+
+    res.redirect('/profile');
+});
     } catch (error) {
         console.error('Ошибка входа:', error);
         res.render('login', {
