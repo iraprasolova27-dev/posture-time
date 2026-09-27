@@ -415,6 +415,8 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+    console.log('=== ПОЛУЧЕН ЗАПРОС НА ВХОД ===');
+
     try {
         const { email, password } = req.body;
 
@@ -439,7 +441,10 @@ app.post('/login', async (req, res) => {
         }
 
         const user = result.rows[0];
-        const passwordCorrect = await bcrypt.compare(password, user.password_hash);
+        const passwordCorrect = await bcrypt.compare(
+            password,
+            user.password_hash
+        );
 
         if (!passwordCorrect) {
             return res.render('login', {
@@ -450,22 +455,26 @@ app.post('/login', async (req, res) => {
 
         await ensureUserProgress(user.id);
 
-       req.session.userId = user.id;
-req.session.userName = user.name;
-req.session.userEmail = user.email;
-req.session.userAvatar = user.avatar;
-req.session.userRole = user.role;
+        req.session.userId = user.id;
+        req.session.userName = user.name;
+        req.session.userEmail = user.email;
+        req.session.userAvatar = user.avatar;
+        req.session.userRole = user.role;
 
-req.session.save((error) => {
-    if (error) {
-        console.error('Ошибка сохранения сессии:', error);
-        return res.status(500).send('Не удалось сохранить сессию.');
-    }
+        req.session.save((error) => {
+            if (error) {
+                console.error('Ошибка сохранения сессии:', error);
+                return res.status(500).send(
+                    'Не удалось сохранить сессию.'
+                );
+            }
 
-    res.redirect('/profile');
-});
+            res.redirect('/profile');
+        });
+
     } catch (error) {
         console.error('Ошибка входа:', error);
+
         res.render('login', {
             title: 'Вход — Posture Time',
             error: 'Не удалось выполнить вход.'
