@@ -1,0 +1,224 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 9
+        </div>
+
+        <h1>Когда нужно остановиться?</h1>
+
+        <p class="lesson-intro">
+            Во время любой активности важно обращать внимание
+            на своё самочувствие.
+        </p>
+
+    </section>
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-placeholder">
+                🛑
+            </div>
+
+            <div class="illustration-character">
+                🐱
+            </div>
+
+        </div>
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                ❤️
+            </div>
+
+            <h2>Слушай своё самочувствие</h2>
+
+            <p>
+                Во время движения важно обращать внимание
+                на то, как ты себя чувствуешь.
+            </p>
+
+            <p>
+                Если тебе стало плохо, появилась боль,
+                сильное головокружение или другое неприятное
+                состояние, нужно остановиться.
+            </p>
+
+            <p>
+                Не нужно продолжать упражнение через силу.
+            </p>
+
+            <p>
+                В такой ситуации нужно сообщить взрослому
+                и вместе решить, что делать дальше.
+            </p>
+
+            <p>
+                Безопасность всегда важнее результата
+                тренировки или игры.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Если во время активности тебе больно или
+                тебе стало плохо — остановись и расскажи
+                об этом взрослому.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Что нужно сделать, если во время упражнения стало плохо?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант.
+        </p>
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                Остановиться и рассказать взрослому
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Продолжить через силу
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Никому ничего не говорить
+            </button>
+
+        </div>
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons/8" class="lesson-button secondary">
+            ← Предыдущий
+        </a>
+
+        <a href="/lessons/10" class="lesson-button">
+            Следующий урок →
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Отличная работа! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — первый вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes(
+                    'Остановиться и рассказать'
+                )) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(9);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

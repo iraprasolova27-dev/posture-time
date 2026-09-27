@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Полезная змейка — Posture Time</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/characters.css">
+
+    <style>
+        body {
+            background: linear-gradient(180deg, #eef8ff 0%, #f8fcff 55%, #ffffff 100%);
+            color: #183b63;
+        }
+
+        .game-page {
+            padding: 35px 0 60px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .game-header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            color: #183f72;
+            margin-bottom: 8px;
+        }
+
+        .game-header p {
+            color: #71879c;
+            margin: 0;
+        }
+
+        .game-panel {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(61, 126, 170, .12);
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .stat {
+            padding: 14px;
+            border-radius: 17px;
+            background: #f3f8ff;
+            text-align: center;
+        }
+
+        .stat span {
+            display: block;
+            font-size: 12px;
+            color: #8194a8;
+        }
+
+        .stat strong {
+            font-size: 22px;
+            color: #25558a;
+        }
+
+        #snakeCanvas {
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 22px;
+            background: #eef9f3;
+            border: 3px solid #d8eee4;
+            touch-action: none;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-message {
+            color: #5f7890;
+            font-weight: 600;
+        }
+
+        .game-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .game-button {
+            border: 0;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #e4f1ff;
+            color: #2864a5;
+        }
+
+        .game-button.primary {
+            background: #27c995;
+            color: white;
+        }
+
+        .game-help {
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 18px;
+            background: #f5f9ff;
+            color: #637b92;
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+            .game-panel {
+                padding: 15px;
+            }
+
+            .game-header h1 {
+                font-size: 30px;
+            }
+
+            .game-stats {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{{> header}}
+
+<main>
+
+    <div class="container game-page">
+
+        <div class="game-header">
+            <h1>🐍 Полезная змейка</h1>
+            <p>Собирай полезные продукты и учись избегать вредных.</p>
+        </div>
+
+        <div class="game-panel">
+
+            <div class="game-stats">
+
+                <div class="stat">
+                    <span>Очки</span>
+                    <strong id="score">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Рекорд</span>
+                    <strong id="best">0</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Длина</span>
+                    <strong id="length">3</strong>
+                </div>
+
+            </div>
+
+            <canvas id="snakeCanvas" width="700" height="450"></canvas>
+
+            <div class="game-info">
+
+                <div class="game-message" id="message">
+                    Выбери направление и начинай!
+                </div>
+
+                <div class="game-buttons">
+
+                    <button class="game-button primary" id="startButton">
+                        ▶ Начать
+                    </button>
+
+                    <button class="game-button" id="pauseButton">
+                        ⏸ Пауза
+                    </button>
+
+                    <button class="game-button" id="restartButton">
+                        🔄 Заново
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="game-help">
+                🟢 🍎 Полезная еда — +10 очков и рост змейки.
+                🍔 Вредную еду можно просто объехать. Если врежешься в неё — потеряешь жизнь.
+                ⭐ Бонус — +25 очков.
+                <br><br>
+                Управление: стрелки или WASD.
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="/js/character.js"></script>
+
+<script>
+const canvas = document.getElementById("snakeCanvas");
+const ctx = canvas.getContext("2d");
+
+const scoreElement = document.getElementById("score");
+const bestElement = document.getElementById("best");
+const lengthElement = document.getElementById("length");
+const messageElement = document.getElementById("message");
+
+const startButton = document.getElementById("startButton");
+const pauseButton = document.getElementById("pauseButton");
+const restartButton = document.getElementById("restartButton");
+
+const cell = 25;
+
+const columns = Math.floor(canvas.width / cell);
+const rows = Math.floor(canvas.height / cell);
+
+let snake;
+let direction;
+let nextDirection;
+let healthyFood;
+let unhealthyFood;
+let bonusFood;
+let score = 0;
+let best = Number(localStorage.getItem("snakeBest") || 0);
+let running = false;
+let paused = false;
+let timer = null;
+
+bestElement.textContent = best;
+
+const healthy = ["🍎", "🥦", "🍓", "🥕", "🍌", "🍊"];
+const unhealthy = ["🍔", "🍟", "🍩", "🍕", "🍫"];
+
+function randomPosition() {
+
+    let position;
+
+    do {
+        position = {
+            x: Math.floor(Math.random() * columns),
+            y: Math.floor(Math.random() * rows)
+        };
+    } while (
+        snake.some(part => part.x === position.x && part.y === position.y)
+    );
+
+    return position;
+}
+
+function resetGame() {
+
+    snake = [
+        {x: 8, y: 8},
+        {x: 7, y: 8},
+        {x: 6, y: 8}
+    ];
+
+    direction = {x: 1, y: 0};
+    nextDirection = {x: 1, y: 0};
+
+    score = 0;
+
+    healthyFood = randomPosition();
+    unhealthyFood = randomPosition();
+    bonusFood = null;
+
+    updateStats();
+
+    messageElement.textContent = "Выбери направление и начинай!";
+
+    draw();
+}
+
+function updateStats() {
+    scoreElement.textContent = score;
+    lengthElement.textContent = snake.length;
+
+    if (score > best) {
+        best = score;
+        localStorage.setItem("snakeBest", best);
+    }
+
+    bestElement.textContent = best;
+}
+
+function isSame(a, b) {
+    return a.x === b.x && a.y === b.y;
+}
+
+function drawEmoji(emoji, x, y) {
+
+    ctx.font = "22px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        emoji,
+        x * cell + cell / 2,
+        y * cell + cell / 2
+    );
+}
+
+function draw() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#effaf4";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let x = 0; x < columns; x++) {
+        for (let y = 0; y < rows; y++) {
+
+            if ((x + y) % 2 === 0) {
+
+                ctx.fillStyle = "rgba(255,255,255,.25)";
+
+                ctx.fillRect(
+                    x * cell,
+                    y * cell,
+                    cell,
+                    cell
+                );
+            }
+        }
+    }
+
+    if (healthyFood) {
+        drawEmoji(
+            healthy[Math.floor(Math.random() * healthy.length)],
+            healthyFood.x,
+            healthyFood.y
+        );
+    }
+
+    if (unhealthyFood) {
+        drawEmoji(
+            unhealthy[Math.floor(Math.random() * unhealthy.length)],
+            unhealthyFood.x,
+            unhealthyFood.y
+        );
+    }
+
+    if (bonusFood) {
+        drawEmoji("⭐", bonusFood.x, bonusFood.y);
+    }
+
+    snake.forEach((part, index) => {
+
+        ctx.fillStyle =
+            index === 0
+                ? "#27b985"
+                : "#63d5a9";
+
+        ctx.beginPath();
+
+        ctx.roundRect(
+            part.x * cell + 2,
+            part.y * cell + 2,
+            cell - 4,
+            cell - 4,
+            7
+        );
+
+        ctx.fill();
+
+    });
+
+    ctx.fillStyle = "white";
+    ctx.font = "15px Arial";
+    ctx.textAlign = "center";
+
+    const head = snake[0];
+
+    ctx.fillText(
+        "●",
+        head.x * cell + cell / 2,
+        head.y * cell + cell / 2 + 1
+    );
+}
+
+function move() {
+
+    if (!running || paused) return;
+
+    direction = nextDirection;
+
+    const head = {
+        x: snake[0].x + direction.x,
+        y: snake[0].y + direction.y
+    };
+
+    if (
+        head.x < 0 ||
+        head.x >= columns ||
+        head.y < 0 ||
+        head.y >= rows
+    ) {
+        endGame("Ты врезалась в стену!");
+        return;
+    }
+
+    if (
+        snake.some(part => isSame(part, head))
+    ) {
+        endGame("Змейка столкнулась сама с собой!");
+        return;
+    }
+
+    if (
+        unhealthyFood &&
+        isSame(head, unhealthyFood)
+    ) {
+        endGame("Ты выбрала вредный продукт 😅");
+        return;
+    }
+
+    snake.unshift(head);
+
+    if (
+        healthyFood &&
+        isSame(head, healthyFood)
+    ) {
+
+        score += 10;
+
+        healthyFood = randomPosition();
+
+        messageElement.textContent =
+            "Отлично! Полезный выбор! 🍎";
+
+        if (Math.random() < 0.35) {
+            bonusFood = randomPosition();
+        }
+
+    } else if (
+        bonusFood &&
+        isSame(head, bonusFood)
+    ) {
+
+        score += 25;
+
+        bonusFood = null;
+
+        messageElement.textContent =
+            "Бонус! ⭐ +25 очков";
+
+    } else {
+
+        snake.pop();
+    }
+
+    if (
+        unhealthyFood &&
+        isSame(healthyFood, unhealthyFood)
+    ) {
+        unhealthyFood = randomPosition();
+    }
+
+    if (
+        Math.random() < 0.12
+    ) {
+        unhealthyFood = randomPosition();
+    }
+
+    updateStats();
+    draw();
+}
+
+function startGame() {
+
+    if (running) return;
+
+    running = true;
+    paused = false;
+
+    messageElement.textContent =
+        "Поехали! Выбирай, что собрать! 🐍";
+
+    clearInterval(timer);
+
+    timer = setInterval(move, 150);
+
+}
+
+function endGame(text) {
+
+    if (window.PostureTime) {
+        window.PostureTime.saveGame(1, score).catch(function () {});
+    }
+
+    running = false;
+    paused = false;
+
+    clearInterval(timer);
+
+    messageElement.textContent =
+        text + " Попробуй ещё раз!";
+
+    updateStats();
+}
+
+function restartGame() {
+
+    clearInterval(timer);
+
+    running = false;
+    paused = false;
+
+    resetGame();
+}
+
+function changeDirection(x, y) {
+
+    if (
+        direction.x + x === 0 &&
+        direction.y + y === 0
+    ) {
+        return;
+    }
+
+    nextDirection = {x, y};
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "]
+            .includes(event.key)
+    ) {
+        event.preventDefault();
+    }
+
+    if (event.key === "ArrowUp" || event.key.toLowerCase() === "w") {
+        changeDirection(0, -1);
+    }
+
+    if (event.key === "ArrowDown" || event.key.toLowerCase() === "s") {
+        changeDirection(0, 1);
+    }
+
+    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
+        changeDirection(-1, 0);
+    }
+
+    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
+        changeDirection(1, 0);
+    }
+
+    if (event.key === " ") {
+
+        if (running) {
+            paused = !paused;
+            messageElement.textContent =
+                paused ? "Пауза ⏸" : "Продолжаем! ▶";
+        }
+    }
+});
+
+startButton.addEventListener("click", startGame);
+
+pauseButton.addEventListener("click", function() {
+
+    if (!running) return;
+
+    paused = !paused;
+
+    messageElement.textContent =
+        paused ? "Пауза ⏸" : "Продолжаем! ▶";
+});
+
+restartButton.addEventListener("click", restartGame);
+
+resetGame();
+</script>
+
+<script src="/js/character.js"></script>
+<script src="/js/game-music.js"></script>
+</body>
+</html>

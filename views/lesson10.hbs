@@ -1,0 +1,226 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 10
+        </div>
+
+        <h1>Маленькие привычки каждый день</h1>
+
+        <p class="lesson-intro">
+            Небольшие полезные привычки легче сделать
+            частью обычного дня.
+        </p>
+
+    </section>
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-placeholder">
+                ⭐
+            </div>
+
+            <div class="illustration-character">
+                🦊
+            </div>
+
+        </div>
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                💛
+            </div>
+
+            <h2>Начинай с небольших шагов</h2>
+
+            <p>
+                Чтобы больше двигаться в течение дня,
+                не обязательно сразу менять весь свой распорядок.
+            </p>
+
+            <p>
+                Можно начать с небольших привычек:
+                сделать активную паузу, пройтись или
+                немного размяться.
+            </p>
+
+            <p>
+                Можно также чередовать учёбу и отдых,
+                следить за удобством рабочего места
+                и не забывать про сон.
+            </p>
+
+            <p>
+                Главное — постепенно делать движение
+                и заботу о себе частью обычного дня.
+            </p>
+
+            <p>
+                Даже маленький шаг может стать хорошей
+                привычкой, если повторять его регулярно.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Не нужно делать всё сразу.
+                Начни с одной небольшой полезной привычки
+                и постепенно добавляй другие.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Как лучше формировать полезные привычки?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант.
+        </p>
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                Начинать с небольших действий и повторять их
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Сразу делать всё идеально каждый день
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Вообще не делать перерывов
+            </button>
+
+        </div>
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons/9" class="lesson-button secondary">
+            ← Предыдущий
+        </a>
+
+        <a href="/lessons" class="lesson-button">
+            ← Все уроки
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Ты прошёл все уроки! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — первый вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes(
+                    'Начинать с небольших действий'
+                )) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(10);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

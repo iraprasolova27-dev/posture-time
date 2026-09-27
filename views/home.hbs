@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{title}}</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Основные стили -->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <!-- Стили персонажей -->
+    <link
+        rel="stylesheet"
+        href="/css/characters.css"
+    >
+
+    <style>
+
+        /* ==========================================
+           POSTURE TIME — ГЛАВНАЯ
+           ========================================== */
+
+        body {
+            background:
+                linear-gradient(
+                    180deg,
+                    #eef8ff 0%,
+                    #f8fcff 55%,
+                    #ffffff 100%
+                );
+
+            color: #183b63;
+        }
+
+        .pt-home {
+            padding: 25px 0 50px;
+        }
+
+        /* ==========================================
+           HERO
+           ========================================== */
+
+        .pt-hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 390px;
+            padding: 45px;
+            border-radius: 32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dff5ff 0%,
+                    #f4f8ff 50%,
+                    #e8f7f4 100%
+                );
+
+            box-shadow:
+                0 15px 40px rgba(61, 126, 170, 0.12);
+
+            display: flex;
+            align-items: center;
+        }
+
+        .pt-hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            right: -80px;
+            top: -90px;
+
+            background: #d7efff;
+
+            border-radius: 50%;
+
+            opacity: 0.7;
+        }
+
+        .pt-hero-content {
+            position: relative;
+            z-index: 2;
+            width: 58%;
+        }
+
+        .pt-small-label {
+            display: inline-block;
+
+            padding: 8px 15px;
+            margin-bottom: 12px;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.85);
+
+            color: #3b72d0;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .pt-hero h1 {
+            margin: 0 0 15px;
+
+            font-size: 48px;
+            line-height: 1.05;
+            font-weight: 800;
+
+            color: #153c73;
+        }
+
+        .pt-hero-text {
+            max-width: 560px;
+
+            font-size: 19px;
+            line-height: 1.6;
+
+            color: #507091;
+
+            margin-bottom: 25px;
+        }
+
+        .pt-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pt-main-button,
+        .pt-secondary-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 14px 23px;
+
+            border-radius: 18px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .pt-main-button {
+            background:
+                linear-gradient(
+                    135deg,
+                    #27c995,
+                    #19b985
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px rgba(29, 190, 140, 0.25);
+        }
+
+        .pt-secondary-button {
+            background: white;
+
+            color: #3971d3;
+
+            border: 2px solid #d6e8ff;
+        }
+
+        .pt-main-button:hover,
+        .pt-secondary-button:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================
+           ПЕРСОНАЖ
+           ========================================== */
+
+        .pt-hero-character {
+            position: absolute;
+
+            right: 45px;
+            bottom: 15px;
+
+            width: 330px;
+
+            text-align: center;
+        }
+
+        .pt-character-circle {
+            width: 260px;
+            height: 260px;
+
+            margin: 0 auto;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #ffffff 0%,
+                    #dff3ff 70%,
+                    #cceaff 100%
+                );
+
+            box-shadow:
+                inset 0 0 25px rgba(91, 170, 220, 0.15);
+        }
+
+        .pt-character {
+            font-size: 145px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            animation:
+                characterIdle 3s ease-in-out infinite;
+        }
+
+        .pt-character:hover {
+            animation:
+                characterHappy 0.8s ease-in-out;
+        }
+
+        .pt-speech {
+            position: relative;
+
+            margin-top: -25px;
+
+            padding: 13px 18px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px rgba(40, 90, 130, 0.12);
+
+            text-align: left;
+        }
+
+        .pt-speech strong {
+            display: block;
+
+            color: #2864c5;
+
+            margin-bottom: 4px;
+        }
+
+        .pt-speech span {
+            font-size: 14px;
+
+            color: #6c8198;
+        }
+
+        /* ==========================================
+           РАЗДЕЛЫ
+           ========================================== */
+
+        .pt-section {
+            margin-top: 38px;
+        }
+
+        .pt-section-heading {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .pt-section-heading h2 {
+            margin: 3px 0 0;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: #183f72;
+        }
+
+        .pt-section-label {
+            color: #62a3d9;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .pt-xp {
+            padding: 9px 15px;
+
+            background: #fff5c9;
+
+            color: #9d7811;
+
+            border-radius: 15px;
+
+            font-weight: 800;
+        }
+
+        /* ==========================================
+           МИССИИ
+           ========================================== */
+
+        .pt-mission-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .pt-mission-card {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            min-height: 115px;
+
+            padding: 20px;
+
+            background: white;
+
+            border-radius: 22px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            border: 1px solid #e4f0fa;
+
+            box-shadow:
+                0 8px 25px rgba(61, 126, 170, 0.08);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .pt-mission-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 30px rgba(61, 126, 170, 0.14);
+        }
+
+        .pt-mission-icon {
+            width: 62px;
+            height: 62px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 19px;
+
+            font-size: 30px;
+        }
+
+        .green {
+            background: #e0f8ee;
+        }
+
+        .purple {
+            background: #eee8ff;
+        }
+
+        .pink {
+            background: #ffe9f1;
+        }
+
+        .blue {
+            background: #e4f1ff;
+        }
+
+        .yellow {
+            background: #fff4ce;
+        }
+
+        .pt-mission-info h3 {
+            margin: 0 0 5px;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: #244b76;
+        }
+
+        .pt-mission-info p {
+            margin: 0;
+
+            color: #8295aa;
+
+            font-size: 14px;
+        }
+
+        .pt-arrow {
+            margin-left: auto;
+
+            font-size: 24px;
+
+            color: #72a3d2;
+        }
+
+        /* ==========================================
+           СТАТИСТИКА
+           ========================================== */
+
+        .pt-stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+        .pt-stat-card {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 20px;
+
+            background: white;
+
+            border-radius: 21px;
+
+            border: 1px solid #e4f0fa;
+
+            box-shadow:
+                0 8px 24px rgba(61, 126, 170, 0.07);
+        }
+
+        .pt-stat-icon {
+            width: 53px;
+            height: 53px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            font-size: 25px;
+        }
+
+        .pt-stat-title {
+            display: block;
+
+            color: #8497aa;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .pt-stat-value {
+            display: block;
+
+            color: #204a78;
+
+            font-size: 22px;
+
+            font-weight: 800;
+        }
+
+        /* ==========================================
+           ДОСТИЖЕНИЕ
+           ========================================== */
+
+        .pt-achievement {
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 22px 25px;
+
+            margin-top: 35px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff8d9,
+                    #fff2bc
+                );
+
+            box-shadow:
+                0 10px 30px rgba(190, 158, 47, 0.10);
+        }
+
+        .pt-achievement-icon {
+            width: 70px;
+            height: 70px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 21px;
+
+            background: #ffe37b;
+
+            font-size: 36px;
+        }
+
+        .pt-achievement small {
+            color: #a88a28;
+
+            font-weight: 700;
+        }
+
+        .pt-achievement h3 {
+            margin: 3px 0;
+
+            color: #725d18;
+
+            font-weight: 800;
+        }
+
+        .pt-achievement p {
+            margin: 0;
+
+            color: #927d35;
+        }
+
+        .pt-achievement-button {
+            margin-left: auto;
+
+            padding: 11px 17px;
+
+            background: white;
+
+            color: #8d711b;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        /* ==========================================
+           ПОДВАЛ
+           ========================================== */
+
+        .pt-footer {
+            margin-top: 45px;
+
+            padding: 25px 0;
+
+            border-top: 1px solid #dfeef8;
+
+            color: #7891a8;
+
+            font-size: 14px;
+        }
+
+        .pt-footer-inner {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        /* ==========================================
+           АДАПТИВ
+           ========================================== */
+
+        @media (max-width: 1000px) {
+
+            .pt-hero {
+                padding: 30px;
+            }
+
+            .pt-hero-content {
+                width: 60%;
+            }
+
+            .pt-hero-character {
+                right: 15px;
+                width: 300px;
+            }
+
+            .pt-stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .pt-hero {
+                min-height: auto;
+
+                padding: 30px 22px;
+
+                flex-direction: column;
+            }
+
+            .pt-hero-content {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .pt-hero h1 {
+                font-size: 36px;
+            }
+
+            .pt-buttons {
+                justify-content: center;
+            }
+
+            .pt-hero-character {
+                position: relative;
+
+                right: auto;
+                bottom: auto;
+
+                width: 100%;
+
+                margin-top: 20px;
+            }
+
+            .pt-character-circle {
+                width: 210px;
+                height: 210px;
+            }
+
+            .pt-character {
+                font-size: 110px;
+            }
+
+            .pt-mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pt-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pt-achievement {
+                align-items: flex-start;
+
+                flex-wrap: wrap;
+            }
+
+            .pt-achievement-button {
+                margin-left: 0;
+            }
+
+            .pt-footer-inner {
+                flex-direction: column;
+            }
+
+        }
+/* ==========================================
+   ИНТЕРАКТИВНЫЙ ПЕРСОНАЖ
+   ========================================== */
+
+.pt-character {
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.pt-character:focus {
+    outline: 3px solid rgba(93, 110, 234, 0.35);
+    outline-offset: 8px;
+    border-radius: 50%;
+}
+
+.pt-character.active {
+    animation: ptCharacterHappy 0.9s ease-in-out !important;
+}
+
+@keyframes ptCharacterHappy {
+
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+
+    20% {
+        transform: translateY(-18px) rotate(-8deg) scale(1.05);
+    }
+
+    40% {
+        transform: translateY(-35px) rotate(8deg) scale(1.08);
+    }
+
+    60% {
+        transform: translateY(-20px) rotate(-5deg) scale(1.04);
+    }
+
+    80% {
+        transform: translateY(-5px) rotate(4deg) scale(1.01);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+
+/* Облачко при разговоре */
+
+.pt-speech.speaking {
+    animation: speechAppear 0.35s ease;
+}
+
+@keyframes speechAppear {
+
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.94);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* Маленькие звёздочки */
+
+.pt-character-stars {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 220px;
+    height: 220px;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+.pt-character-stars span {
+    position: absolute;
+
+    font-size: 22px;
+
+    opacity: 0;
+
+    animation: ptStar 0.9s ease-out forwards;
+}
+
+.pt-character-stars span:nth-child(1) {
+    left: 5%;
+    top: 25%;
+}
+
+.pt-character-stars span:nth-child(2) {
+    right: 5%;
+    top: 15%;
+    animation-delay: 0.1s;
+}
+
+.pt-character-stars span:nth-child(3) {
+    left: 45%;
+    top: 0;
+    animation-delay: 0.2s;
+}
+
+@keyframes ptStar {
+
+    0% {
+        opacity: 0;
+        transform: translateY(15px) scale(0.5) rotate(0deg);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.1) rotate(15deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.7) rotate(30deg);
+    }
+}
+
+
+/* На устройствах без анимации */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pt-character.active,
+    .pt-speech.speaking,
+    .pt-character-stars span {
+        animation: none;
+    }
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ==========================================
+     ШАПКА
+     ========================================== -->
+
+{{> header}}
+
+<!-- ==========================================
+     ОСНОВНОЕ
+     ========================================== -->
+
+<main>
+
+    <div class="container pt-home">
+
+        <!-- ==================================
+             HERO
+             ================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-hero-content">
+
+                <span class="pt-small-label">
+                    👋 Добро пожаловать!
+                </span>
+
+                <h1>
+                    Добро пожаловать!
+                </h1>
+
+                <p class="pt-hero-text">
+                    Готова позаботиться о своей спине
+                    и немного подвигаться сегодня?
+                </p>
+
+                <div class="pt-buttons">
+
+                    <a
+                        href="/workouts"
+                        class="pt-main-button"
+                    >
+                        🏃 Начать тренировку
+                    </a>
+
+                    <a
+                        href="/lessons"
+                        class="pt-secondary-button"
+                    >
+                        📚 Узнать больше
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- ПЕРСОНАЖ -->
+
+            <div class="pt-hero-character">
+
+                <div class="pt-character-circle">
+
+                    <div
+    class="pt-character character main-character"
+    id="homeCharacter"
+    title="Нажми на меня!"
+    role="button"
+    tabindex="0"
+    aria-label="Персонаж Posture Time"
+>
+    🦊
+</div>
+
+                </div>
+
+                <div class="pt-speech" id="characterSpeech">
+
+    <strong id="characterSpeechTitle">
+        ⭐ Твоя миссия сегодня!
+    </strong>
+
+    <span id="characterSpeechText">
+        Двигайся, играй и получай XP!
+    </span>
+
+</div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             МИССИЯ
+             ================================== -->
+
+        <section class="pt-section">
+
+            <div class="pt-section-heading">
+
+                <div>
+
+                    <span class="pt-section-label">
+                        Сегодня
+                    </span>
+
+                    <h2>
+                        Твоя миссия
+                    </h2>
+
+                </div>
+
+                <span class="pt-xp">
+                    ⭐ +100 XP
+                </span>
+
+            </div>
+
+            <div class="pt-mission-grid">
+
+                <a
+                    href="/workouts"
+                    class="pt-mission-card"
+                >
+
+                    <div class="pt-mission-icon green">
+                        🏃
+                    </div>
+
+                    <div class="pt-mission-info">
+
+                        <h3>
+                            Тренировка
+                        </h3>
+
+                        <p>
+                            12 минут
+                        </p>
+
+                    </div>
+
+                    <span class="pt-arrow">
+                        →
+                    </span>
+
+                </a>
+
+                <a
+                    href="/lessons"
+                    class="pt-mission-card"
+                >
+
+                    <div class="pt-mission-icon purple">
+                        📚
+                    </div>
+
+                    <div class="pt-mission-info">
+
+                        <h3>
+                            Узнай новое
+                        </h3>
+
+                        <p>
+                            5 минут
+                        </p>
+
+                    </div>
+
+                    <span class="pt-arrow">
+                        →
+                    </span>
+
+                </a>
+
+                <a
+                    href="/games"
+                    class="pt-mission-card"
+                >
+
+                    <div class="pt-mission-icon pink">
+                        🎮
+                    </div>
+
+                    <div class="pt-mission-info">
+
+                        <h3>
+                            Игры
+                        </h3>
+
+                        <p>
+                            10 минут
+                        </p>
+
+                    </div>
+
+                    <span class="pt-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             ПРОГРЕСС
+             ================================== -->
+
+        <section class="pt-section">
+
+            <div class="pt-section-heading">
+
+                <div>
+
+                    <span class="pt-section-label">
+                        Молодец!
+                    </span>
+
+                    <h2>
+                        Твой прогресс
+                    </h2>
+
+                </div>
+
+                <a
+                    href="/progress"
+                    class="show-all"
+                >
+                    Смотреть всё →
+                </a>
+
+            </div>
+
+            <div class="pt-stats-grid">
+
+                <div class="pt-stat-card">
+
+                    <div class="pt-stat-icon green">
+                        🏃
+                    </div>
+
+                    <div>
+
+                        <span class="pt-stat-title">
+                            Тренировки
+                        </span>
+
+                        <strong class="pt-stat-value" id="homeWorkouts">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <div class="pt-stat-card">
+
+                    <div class="pt-stat-icon blue">
+                        ⏱️
+                    </div>
+
+                    <div>
+
+                        <span class="pt-stat-title">
+                            Время активности
+                        </span>
+
+                        <strong class="pt-stat-value" id="homeMinutes">
+                            0 мин
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <div class="pt-stat-card">
+
+                    <div class="pt-stat-icon purple">
+                        📚
+                    </div>
+
+                    <div>
+
+                        <span class="pt-stat-title">
+                            Уроки
+                        </span>
+
+                        <strong class="pt-stat-value" id="homeLessons">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <div class="pt-stat-card">
+
+                    <div class="pt-stat-icon yellow">
+                        🏆
+                    </div>
+
+                    <div>
+
+                        <span class="pt-stat-title">
+                            Достижения
+                        </span>
+
+                        <strong class="pt-stat-value" id="homeAchievements">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             ДОСТИЖЕНИЕ
+             ================================== -->
+
+        <section class="pt-achievement">
+
+            <div class="pt-achievement-icon">
+                🏆
+            </div>
+
+            <div>
+
+                <small>
+                    Последнее достижение
+                </small>
+
+                <h3 id="homeLatestAchievement">Пока нет достижений</h3>
+
+                <p id="homeLatestAchievementText">Начни с первой тренировки, урока или игры. ⭐</p>
+
+            </div>
+
+            <a
+                href="/achievements"
+                class="pt-achievement-button"
+            >
+                Смотреть всё
+            </a>
+
+        </section>
+
+    </div>
+
+</main>
+
+<!-- ==========================================
+     ПОДВАЛ
+     ========================================== -->
+
+<footer class="pt-footer">
+
+    <div class="container">
+
+        <div class="pt-footer-inner">
+
+            <strong>
+                Posture Time
+            </strong>
+
+            <span>
+                Двигайся. Узнавай. Расти.
+            </span>
+
+            <span>
+                ❤️ Забота о себе — это круто!
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+    document.addEventListener('posturetime:stats', function (event) {
+        const stats = event.detail;
+        if (!stats || !stats.authenticated) return;
+
+        document.getElementById('homeWorkouts').textContent = stats.workouts;
+        document.getElementById('homeMinutes').textContent = stats.activeMinutes + ' мин';
+        document.getElementById('homeLessons').textContent = stats.lessons;
+        document.getElementById('homeAchievements').textContent = stats.achievements;
+
+        if (stats.latestAchievement) {
+            document.getElementById('homeLatestAchievement').textContent =
+                stats.latestAchievement.title;
+            document.getElementById('homeLatestAchievementText').textContent =
+                stats.latestAchievement.description || 'Отличная работа! ⭐';
+        }
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const character =
+        document.getElementById('homeCharacter');
+
+    const speech =
+        document.getElementById('characterSpeech');
+
+    const speechTitle =
+        document.getElementById('characterSpeechTitle');
+
+    const speechText =
+        document.getElementById('characterSpeechText');
+
+
+    if (!character || !speech || !speechTitle || !speechText) {
+        return;
+    }
+
+
+    const phrases = [
+
+        {
+            title: '🌟 Ты молодец!',
+            text: 'Даже маленькое движение — уже шаг вперёд!'
+        },
+
+        {
+            title: '💚 Я рядом!',
+            text: 'Давай сегодня немного подвигались вместе?'
+        },
+
+        {
+            title: '⭐ Отличное настроение!',
+            text: 'Ты справишься. Главное — начать!'
+        },
+
+        {
+            title: '🏃 Время двигаться!',
+            text: 'Небольшая активность может сделать день веселее!'
+        },
+
+        {
+            title: '🎮 Готова?',
+            text: 'После тренировки можно заглянуть в игры!'
+        },
+
+        {
+            title: '🌈 Всё получится!',
+            text: 'Не нужно быть идеальной. Просто попробуй!'
+        },
+
+        {
+            title: '💪 Зарядка!',
+            text: 'Давай сделаем сегодня что-нибудь полезное для себя.'
+        },
+
+        {
+            title: '🐾 Я верю в тебя!',
+            text: 'Один маленький шаг — и ты уже молодец!'
+        }
+
+    ];
+
+
+    let lastPhrase = -1;
+
+
+    function speakCharacter() {
+
+        let randomIndex;
+
+        do {
+
+            randomIndex =
+                Math.floor(
+                    Math.random() * phrases.length
+                );
+
+        } while (
+            randomIndex === lastPhrase &&
+            phrases.length > 1
+        );
+
+
+        lastPhrase = randomIndex;
+
+
+        const phrase =
+            phrases[randomIndex];
+
+
+        speechTitle.textContent =
+            phrase.title;
+
+        speechText.textContent =
+            phrase.text;
+
+
+        /* Перезапускаем анимацию */
+
+        character.classList.remove('active');
+
+        speech.classList.remove('speaking');
+
+
+        void character.offsetWidth;
+        void speech.offsetWidth;
+
+
+        character.classList.add('active');
+        speech.classList.add('speaking');
+
+
+        /* Добавляем звёздочки */
+
+        const oldStars =
+            document.querySelector('.pt-character-stars');
+
+        if (oldStars) {
+            oldStars.remove();
+        }
+
+
+        const stars =
+            document.createElement('div');
+
+        stars.className =
+            'pt-character-stars';
+
+
+        stars.innerHTML = `
+            <span>⭐</span>
+            <span>✨</span>
+            <span>⭐</span>
+        `;
+
+
+        character.parentElement.appendChild(stars);
+
+
+        /* Возвращаем обычную миссию */
+
+        clearTimeout(speakCharacter.timer);
+
+
+        speakCharacter.timer =
+            setTimeout(function () {
+
+                speechTitle.textContent =
+                    '⭐ Твоя миссия сегодня!';
+
+                speechText.textContent =
+                    'Двигайся, играй и получай XP!';
+
+            }, 5000);
+
+    }
+
+
+    character.addEventListener(
+        'click',
+        speakCharacter
+    );
+
+
+    character.addEventListener(
+        'keydown',
+        function (event) {
+
+            if (
+                event.key === 'Enter' ||
+                event.key === ' '
+            ) {
+
+                event.preventDefault();
+
+                speakCharacter();
+
+            }
+
+        }
+    );
+
+});
+</script>
+
+
+<script src="/js/character.js"></script>
+
+</body>
+
+</html>

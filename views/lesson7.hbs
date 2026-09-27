@@ -1,0 +1,221 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 7
+        </div>
+
+        <h1>Как носить рюкзак?</h1>
+
+        <p class="lesson-intro">
+            Правильное использование рюкзака помогает
+            сделать его ношение более удобным.
+        </p>
+
+    </section>
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-placeholder">
+                🎒
+            </div>
+
+            <div class="illustration-character">
+                🐼
+            </div>
+
+        </div>
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                💚
+            </div>
+
+            <h2>Рюкзак должен быть удобным</h2>
+
+            <p>
+                Рюкзак используется почти каждый день,
+                поэтому важно правильно его носить.
+            </p>
+
+            <p>
+                Лучше использовать обе лямки, чтобы рюкзак
+                располагался устойчиво на спине.
+            </p>
+
+            <p>
+                Не стоит носить рюкзак только на одном плече,
+                если этого можно избежать.
+            </p>
+
+            <p>
+                В рюкзаке желательно оставлять только те вещи,
+                которые действительно нужны.
+            </p>
+
+            <p>
+                Если рюкзак неудобный или слишком тяжёлый,
+                расскажи об этом взрослому.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Используй обе лямки рюкзака и не носи
+                с собой лишние тяжёлые вещи.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Как лучше носить рюкзак?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант.
+        </p>
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                На обеих лямках
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Только на одном плече
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                В одной руке весь день
+            </button>
+
+        </div>
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons/6" class="lesson-button secondary">
+            ← Предыдущий
+        </a>
+
+        <a href="/lessons/8" class="lesson-button">
+            Следующий урок →
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Отличная работа! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — первый вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes('На обеих лямках')) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(7);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

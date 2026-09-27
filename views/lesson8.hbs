@@ -1,0 +1,223 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 8
+        </div>
+
+        <h1>Почему отдых важен?</h1>
+
+        <p class="lesson-intro">
+            Отдых помогает восстановиться после учёбы,
+            активности и насыщенного дня.
+        </p>
+
+    </section>
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-placeholder">
+                😴
+            </div>
+
+            <div class="illustration-character">
+                🐻
+            </div>
+
+        </div>
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                💙
+            </div>
+
+            <h2>Активность и отдых должны сменять друг друга</h2>
+
+            <p>
+                В течение дня нам нужны не только движение
+                и активность, но и время для отдыха.
+            </p>
+
+            <p>
+                После учёбы, тренировок и игр организму
+                необходимо восстановиться.
+            </p>
+
+            <p>
+                Полезно чередовать активные занятия
+                со спокойными делами и отдыхом.
+            </p>
+
+            <p>
+                Сон также является важной частью
+                полноценного отдыха.
+            </p>
+
+            <p>
+                Если ты устал, не обязательно продолжать
+                активность через силу.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Хороший день состоит не только из активности.
+                Не забывай давать себе время на отдых и сон.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Зачем нужен отдых?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант.
+        </p>
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                Чтобы восстановиться после активности
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Чтобы никогда не двигаться
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Чтобы сидеть за компьютером всю ночь
+            </button>
+
+        </div>
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons/7" class="lesson-button secondary">
+            ← Предыдущий
+        </a>
+
+        <a href="/lessons/9" class="lesson-button">
+            Следующий урок →
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Отличная работа! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — первый вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes(
+                    'Чтобы восстановиться'
+                )) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(8);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

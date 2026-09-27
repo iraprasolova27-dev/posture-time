@@ -1,0 +1,234 @@
+/* =========================================
+   POSTURE TIME — ПЕРСОНАЖИ
+   ========================================= */
+
+.character {
+    position: relative;
+    display: inline-block;
+    transform-origin: center bottom;
+    animation: characterIdle 3s ease-in-out infinite;
+}
+
+/* Спокойное движение */
+@keyframes characterIdle {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-7px) rotate(1deg);
+    }
+}
+
+/* Приветствие */
+.character.hello {
+    animation: characterHello 1.2s ease-in-out;
+}
+
+@keyframes characterHello {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg) translateY(-4px);
+    }
+
+    50% {
+        transform: rotate(5deg) translateY(-8px);
+    }
+
+    75% {
+        transform: rotate(-4deg) translateY(-4px);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Радость */
+.character.happy {
+    animation: characterHappy 0.8s ease-in-out 2;
+}
+
+@keyframes characterHappy {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    40% {
+        transform: translateY(-20px) scale(1.05);
+    }
+
+    70% {
+        transform: translateY(0) scale(0.98);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Прыжок */
+.character.jump {
+    animation: characterJump 1s ease-in-out;
+}
+
+@keyframes characterJump {
+    0% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-45px) rotate(-3deg);
+    }
+
+    70% {
+        transform: translateY(-20px) rotate(3deg);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Разминка */
+.character.stretch {
+    animation: characterStretch 2s ease-in-out;
+}
+
+@keyframes characterStretch {
+    0% {
+        transform: rotate(0deg) translateY(0);
+    }
+
+    25% {
+        transform: rotate(-6deg) translateY(-5px);
+    }
+
+    50% {
+        transform: rotate(6deg) translateY(-10px);
+    }
+
+    75% {
+        transform: rotate(-4deg) translateY(-5px);
+    }
+
+    100% {
+        transform: rotate(0deg) translateY(0);
+    }
+}
+
+/* Сон */
+.character.sleep {
+    animation: characterSleep 3s ease-in-out infinite;
+}
+
+@keyframes characterSleep {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(4px) rotate(2deg);
+        opacity: 0.85;
+    }
+}
+
+/* Облако эмоции над персонажем */
+
+.character-message {
+    position: absolute;
+    top: -45px;
+    right: -20px;
+
+    padding: 8px 14px;
+
+    background: white;
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(40, 80, 130, 0.12);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    animation: messageAppear 0.4s ease;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Звёздочки при награде */
+
+.character-stars {
+    position: absolute;
+    inset: -30px;
+    pointer-events: none;
+}
+
+.character-stars span {
+    position: absolute;
+    font-size: 22px;
+    animation: starFloat 1.5s ease-in-out infinite;
+}
+
+.character-stars span:nth-child(1) {
+    left: 10%;
+    top: 20%;
+}
+
+.character-stars span:nth-child(2) {
+    right: 10%;
+    top: 35%;
+    animation-delay: .3s;
+}
+
+.character-stars span:nth-child(3) {
+    left: 40%;
+    top: 0;
+    animation-delay: .6s;
+}
+
+@keyframes starFloat {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(10px) scale(.7);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1);
+    }
+}
+
+
+/* =========================================
+   УМЕНЬШЕНИЕ АНИМАЦИЙ
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .character,
+    .character.hello,
+    .character.happy,
+    .character.jump,
+    .character.stretch,
+    .character.sleep,
+    .character-message,
+    .character-stars span {
+        animation: none;
+    }
+}

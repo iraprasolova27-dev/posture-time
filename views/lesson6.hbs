@@ -1,0 +1,226 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 6
+        </div>
+
+        <h1>Как сидеть за компьютером?</h1>
+
+        <p class="lesson-intro">
+            Правильная организация рабочего места помогает
+            сделать длительное сидение более комфортным.
+        </p>
+
+    </section>
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-placeholder">
+                💻
+            </div>
+
+            <div class="illustration-character">
+                🦊
+            </div>
+
+        </div>
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                💙
+            </div>
+
+            <h2>Рабочее место тоже важно</h2>
+
+            <p>
+                Когда мы долго сидим за компьютером,
+                важно следить за тем, как организовано
+                рабочее место.
+            </p>
+
+            <p>
+                Старайся сидеть удобно, держать спину
+                в естественном положении и не наклоняться
+                слишком сильно к экрану.
+            </p>
+
+            <p>
+                Экран лучше расположить так, чтобы не
+                приходилось постоянно сильно наклонять голову.
+            </p>
+
+            <p>
+                Не забывай делать небольшие перерывы:
+                можно встать, пройтись и немного подвигаться.
+            </p>
+
+            <p>
+                Если долго работать или играть за компьютером,
+                регулярные перерывы особенно важны.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Удобное рабочее место и небольшие активные
+                перерывы помогают не проводить долгое время
+                в одном положении.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Что полезно делать во время долгой работы за компьютером?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант.
+        </p>
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                Делать небольшие перерывы и двигаться
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Сидеть без перерыва несколько часов
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Постоянно наклоняться к экрану
+            </button>
+
+        </div>
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons/5" class="lesson-button secondary">
+            ← Предыдущий
+        </a>
+
+        <a href="/lessons/7" class="lesson-button">
+            Следующий урок →
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Отличная работа! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — первый вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes(
+                    'Делать небольшие перерывы'
+                )) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(6);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

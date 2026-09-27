@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Достижения — Posture Time</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef8ff, #f5f1ff);
+            color: #25324a;
+        }
+
+        .achievements-page {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #68758a;
+            margin-bottom: 35px;
+        }
+
+        .summary {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(60,70,100,0.08);
+        }
+
+        .summary-number {
+            font-size: 38px;
+            font-weight: bold;
+            color: #5d6eea;
+        }
+
+        .summary-text {
+            color: #748096;
+            margin-top: 5px;
+        }
+
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .achievement {
+            background: white;
+            border-radius: 22px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(60,70,100,0.08);
+            transition: transform 0.2s;
+        }
+
+        .achievement:hover {
+            transform: translateY(-4px);
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+            filter: grayscale(0.5);
+        }
+
+        .achievement-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .achievement h3 {
+            margin: 5px 0 10px;
+        }
+
+        .achievement p {
+            color: #68758a;
+            line-height: 1.5;
+            min-height: 45px;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .unlocked-status {
+            background: #dff7e8;
+            color: #25834a;
+        }
+
+        .locked-status {
+            background: #eef0f4;
+            color: #788397;
+        }
+
+        .button {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            text-decoration: none;
+            background: #5d6eea;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 14px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #4d5dd2;
+        }
+
+        @media (max-width: 850px) {
+
+            .achievements {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .achievements {
+                grid-template-columns: 1fr;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ШАПКА САЙТА -->
+
+{{> header}}
+
+
+<main class="achievements-page">
+
+
+    <h1 class="title">
+        🏆 Мои достижения
+    </h1>
+
+
+    <p class="subtitle">
+        Выполняй небольшие задания и открывай новые достижения!
+    </p>
+
+
+    <div class="summary">
+
+        <div class="summary-number" id="unlockedCount">
+            0 / 6
+        </div>
+
+        <div class="summary-text">
+            достижений открыто
+        </div>
+
+    </div>
+
+
+    <div class="achievements">
+
+
+        <!-- 1 -->
+
+        <div class="achievement" id="achievement1">
+
+            <div class="achievement-icon">
+                🌱
+            </div>
+
+            <h3>
+                Первый шаг
+            </h3>
+
+            <p>
+                Сделай свою первую запись в дневнике.
+            </p>
+
+            <span class="status" id="status1">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="achievement" id="achievement2">
+
+            <div class="achievement-icon">
+                🏃
+            </div>
+
+            <h3>
+                В движении
+            </h3>
+
+            <p>
+                Сделай 3 активности.
+            </p>
+
+            <span class="status" id="status2">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="achievement" id="achievement3">
+
+            <div class="achievement-icon">
+                ⭐
+            </div>
+
+            <h3>
+                100 XP
+            </h3>
+
+            <p>
+                Набери 100 XP за активность.
+            </p>
+
+            <span class="status" id="status3">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="achievement" id="achievement4">
+
+            <div class="achievement-icon">
+                📚
+            </div>
+
+            <h3>
+                Любознательный
+            </h3>
+
+            <p>
+                Изучи материалы Posture Time.
+            </p>
+
+            <span class="status" id="status4">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="achievement" id="achievement5">
+
+            <div class="achievement-icon">
+                🎮
+            </div>
+
+            <h3>
+                Игрок
+            </h3>
+
+            <p>
+                Попробуй одну из игр.
+            </p>
+
+            <span class="status" id="status5">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="achievement" id="achievement6">
+
+            <div class="achievement-icon">
+                🔥
+            </div>
+
+            <h3>
+                Не останавливаюсь
+            </h3>
+
+            <p>
+                Сделай 5 записей активности.
+            </p>
+
+            <span class="status" id="status6">
+                🔒 Закрыто
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <a href="/progress" class="button">
+        📈 Посмотреть прогресс
+    </a>
+
+
+</main>
+
+
+<script>
+
+    async function loadAchievements() {
+        try {
+            const response = await fetch('/api/me/stats', {
+                credentials: 'same-origin'
+            });
+
+            const stats = await response.json();
+
+            if (!response.ok || !stats.authenticated) {
+                return;
+            }
+
+            const unlocked = new Set();
+
+            if (stats.totalActivities >= 1) unlocked.add(1);
+            if (stats.workouts >= 3) unlocked.add(2);
+            if (stats.xp >= 100) unlocked.add(3);
+            if (stats.lessons >= 2) unlocked.add(4);
+            if (stats.games >= 1) unlocked.add(5);
+            if (stats.totalActivities >= 5) unlocked.add(6);
+
+            document.querySelectorAll('.achievement').forEach(card => {
+                card.classList.add('locked');
+            });
+
+            document.querySelectorAll('.status').forEach(status => {
+                status.classList.remove('unlocked-status');
+                status.classList.add('locked-status');
+                status.textContent = '🔒 Закрыто';
+            });
+
+            unlocked.forEach(number => {
+                const card = document.getElementById('achievement' + number);
+                const status = document.getElementById('status' + number);
+
+                if (!card || !status) return;
+
+                card.classList.remove('locked');
+                status.classList.remove('locked-status');
+                status.classList.add('unlocked-status');
+                status.textContent = '✓ Открыто';
+            });
+
+            document.getElementById('unlockedCount').textContent =
+                unlocked.size + ' / 6';
+
+        } catch (error) {
+            console.error('Ошибка загрузки достижений:', error);
+        }
+    }
+
+    loadAchievements();
+
+</script>
+
+</body>
+
+</html>

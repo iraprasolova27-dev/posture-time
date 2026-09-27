@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Прогресс — Posture Time</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef8ff, #f5f1ff);
+            color: #25324a;
+        }
+
+        .progress-page {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #68758a;
+            margin-bottom: 35px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 22px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(60,70,100,0.08);
+        }
+
+        .stat-icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #5d6eea;
+        }
+
+        .stat-name {
+            color: #748096;
+            margin-top: 5px;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, #6675ea, #8c6de8);
+            color: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(80,80,180,0.18);
+        }
+
+        .level-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .level-title {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .xp {
+            font-size: 18px;
+        }
+
+        .progress-background {
+            width: 100%;
+            height: 15px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(60,70,100,0.08);
+        }
+
+        .section h2 {
+            margin-top: 0;
+            font-size: 25px;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .day {
+            text-align: center;
+            padding: 15px 5px;
+            border-radius: 15px;
+            background: #f2f4f8;
+        }
+
+        .day.active {
+            background: #dff7e8;
+        }
+
+        .day-number {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .day-status {
+            font-size: 20px;
+        }
+
+        .message {
+            background: #fff5d9;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            background: #5d6eea;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background: #4d5dd2;
+        }
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .days {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ШАПКА САЙТА -->
+
+{{> header}}
+
+
+<main class="progress-page">
+
+
+    <h1 class="title">
+        Мой прогресс 📈
+    </h1>
+
+
+    <p class="subtitle">
+        Здесь можно посмотреть, сколько ты уже сделал и как продвигаешься.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat-card"><div class="stat-icon">🏃</div><div class="stat-number" id="workoutsCount">0</div><div class="stat-name">Тренировок</div></div>
+        <div class="stat-card"><div class="stat-icon">⏱️</div><div class="stat-number" id="activeMinutes">0</div><div class="stat-name">Активных минут</div></div>
+        <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-number" id="lessonsCount">0</div><div class="stat-name">Уроков</div></div>
+        <div class="stat-card"><div class="stat-icon">🎮</div><div class="stat-number" id="gamesCount">0</div><div class="stat-name">Игр сыграно</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-number" id="xpCount">0</div><div class="stat-name">XP</div></div>
+        <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-number" id="achievementsCount">0</div><div class="stat-name">Достижений</div></div>
+
+    </div>
+
+    <div class="level-card">
+
+        <div class="level-top">
+
+            <div class="level-title">
+                🌟 Уровень 1
+            </div>
+
+            <div class="xp">
+                <span id="levelXp">0</span> / 100 XP
+            </div>
+
+        </div>
+
+
+        <div class="progress-background">
+
+            <div
+                class="progress-fill"
+                id="xpProgress"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <h2>
+            📅 Активность
+        </h2>
+
+        <p>
+            Каждый небольшой шаг имеет значение. Не обязательно заниматься
+            долго — главное регулярно двигаться и делать перерывы.
+        </p>
+
+
+        <div class="days" id="activityDays">
+            <div class="day"><div class="day-number">Пн</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Вт</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Ср</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Чт</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Пт</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Сб</div><div class="day-status">–</div></div>
+            <div class="day"><div class="day-number">Вс</div><div class="day-status">–</div></div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <h2>
+            💡 Маленькая цель
+        </h2>
+
+
+        <div class="message">
+            Попробуй сегодня сделать хотя бы одну небольшую активную паузу
+            между занятиями за компьютером или телефоном. 🚀
+        </div>
+
+
+        <a href="/workouts" class="button">
+            Перейти к тренировкам
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<script>
+    document.addEventListener('posturetime:stats', function (event) {
+        const stats = event.detail;
+        if (!stats || !stats.authenticated) return;
+
+        document.getElementById('workoutsCount').textContent = stats.workouts;
+        document.getElementById('activeMinutes').textContent = stats.activeMinutes;
+        document.getElementById('lessonsCount').textContent = stats.lessons;
+        document.getElementById('gamesCount').textContent = stats.games;
+        document.getElementById('xpCount').textContent = stats.xp;
+        document.getElementById('achievementsCount').textContent = stats.achievements;
+        document.getElementById('levelXp').textContent = stats.xp % 100;
+        document.querySelector('.level-title').textContent = '🌟 Уровень ' + stats.level;
+        document.getElementById('xpProgress').style.width = (stats.xp % 100) + '%';
+        document.getElementById('streakCount').textContent = stats.activeDays;
+
+        const days = document.querySelectorAll('#activityDays .day');
+        (stats.weekActivity || []).forEach((item, index) => {
+            if (!days[index]) return;
+            days[index].classList.toggle('active', item.active);
+            days[index].querySelector('.day-status').textContent =
+                item.active ? '✓' : '–';
+        });
+    });
+</script>
+
+</body>
+</html>

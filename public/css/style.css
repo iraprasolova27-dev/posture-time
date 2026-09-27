@@ -1,0 +1,2059 @@
+/* =========================================================
+   POSTURE TIME — ЕДИНЫЙ ЧИСТЫЙ STYLE.CSS
+   Убраны повторяющиеся и конфликтующие блоки.
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4faff;
+    color: #183b68;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================================
+   ШАПКА
+   ========================================================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 78px;
+    min-height: 78px;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #dfeefa;
+    box-shadow: 0 4px 20px rgba(48, 102, 160, 0.08);
+    backdrop-filter: blur(12px);
+    transition: box-shadow 0.2s ease;
+}
+
+.site-header:hover {
+    box-shadow: 0 4px 18px rgba(50, 100, 160, 0.08);
+}
+
+.site-header .container {
+    height: 100%;
+}
+
+.header-inner {
+    height: 78px;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+/* ЛОГОТИП */
+
+.logo {
+    flex: 0 0 auto;
+    min-width: 210px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: translateY(-1px);
+}
+
+.logo-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #35d6a3, #4d8df7, #6548e7);
+    color: white;
+    font-size: 19px;
+    font-weight: 900;
+    box-shadow: 0 7px 18px rgba(76, 126, 220, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo:hover .logo-icon {
+    transform: rotate(-3deg) scale(1.04);
+    box-shadow: 0 9px 22px rgba(76, 126, 220, 0.32);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.logo-title {
+    font-size: 19px;
+    line-height: 1.1;
+    font-weight: 900;
+    color: #2449b8;
+}
+
+.logo-subtitle {
+    margin-top: 3px;
+    font-size: 10px;
+    color: #7690ad;
+    white-space: nowrap;
+}
+
+/* НАВИГАЦИЯ */
+
+.main-nav {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 2px;
+    scrollbar-width: none;
+}
+
+.main-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.main-nav .nav-link,
+.nav-link {
+    flex: 0 0 auto;
+    position: relative;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 11px;
+    border-radius: 12px;
+    color: #6683a1;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.main-nav .nav-link:hover,
+.nav-link:hover {
+    background: #eef7ff;
+    color: #2864d4;
+    transform: translateY(-1px);
+}
+
+.main-nav .nav-link.active,
+.nav-link.active {
+    background: linear-gradient(135deg, #e9f5ff, #f0edff);
+    color: #285ed0;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(60, 110, 190, 0.08);
+}
+
+.main-nav .nav-link.active::after,
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3974dc;
+    transform: translateX(-50%);
+}
+
+/* ПРОФИЛЬ */
+
+.profile-mini {
+    flex: 0 0 auto;
+    min-width: 105px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px 5px 5px;
+    border-radius: 16px;
+    background: #f5f9ff;
+    border: 1px solid #e2edf8;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-mini:hover {
+    background: #edf6ff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(55, 115, 170, 0.10);
+}
+
+.profile-avatar {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #e2f5ff, #eee7ff);
+    font-size: 22px;
+    border: 2px solid white;
+    box-shadow: 0 3px 10px rgba(70, 110, 170, 0.10);
+}
+
+.profile-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.profile-info strong {
+    color: #294a73;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.profile-info span {
+    color: #7b93ac;
+    font-size: 9px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   ОСНОВА
+   ========================================================= */
+
+main {
+    min-height: calc(100vh - 78px);
+    padding: 28px 0 50px;
+}
+
+/* =========================================================
+   ГЛАВНАЯ
+   ========================================================= */
+
+.hero-section {
+    border-radius: 28px;
+    background: linear-gradient(135deg, #e9f8ff, #f3f0ff);
+    overflow: hidden;
+    margin-bottom: 35px;
+    box-shadow: 0 15px 45px rgba(65, 125, 180, 0.12);
+}
+
+.hero-content {
+    min-height: 310px;
+    padding: 38px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.hero-text {
+    max-width: 580px;
+}
+
+.small-greeting {
+    color: #4b91cf;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.hero-text h1 {
+    font-size: 42px;
+    margin: 0 0 12px;
+    color: #163f88;
+    font-weight: 800;
+}
+
+.hero-text p {
+    max-width: 470px;
+    color: #607c9e;
+    line-height: 1.6;
+    font-size: 17px;
+}
+
+/* КНОПКИ */
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn-main,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.btn-main {
+    color: white;
+    background: linear-gradient(135deg, #23c99a, #28aee8);
+    box-shadow: 0 10px 20px rgba(39, 190, 164, 0.25);
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 25px rgba(39, 190, 164, 0.3);
+    color: white;
+}
+
+.btn-secondary {
+    color: #3861b9;
+    background: white;
+    border: 1px solid #dcecff;
+}
+
+.btn-secondary:hover {
+    background: #f5faff;
+}
+
+/* ПЕРСОНАЖ */
+
+.hero-character {
+    position: relative;
+    min-width: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-circle {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #c6edff, #dcd5ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8);
+}
+
+.character {
+    font-size: 125px;
+    transform: translateY(5px);
+}
+
+.speech-bubble {
+    position: absolute;
+    right: -10px;
+    top: 15px;
+    width: 170px;
+    padding: 14px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(55, 100, 150, 0.15);
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.speech-bubble strong {
+    color: #2858b7;
+}
+
+.speech-bubble span {
+    color: #7189a5;
+    line-height: 1.4;
+}
+
+/* СЕКЦИИ */
+
+.section-block {
+    margin-bottom: 35px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.section-label {
+    display: block;
+    font-size: 11px;
+    color: #61a1d0;
+    margin-bottom: 3px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #214d8b;
+}
+
+.mission-xp {
+    padding: 7px 12px;
+    background: #fff5cc;
+    border-radius: 10px;
+    color: #a77712;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.show-all {
+    font-size: 13px;
+    color: #3674d4;
+}
+
+/* МИССИИ */
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.mission-card {
+    padding: 20px;
+    background: white;
+    border: 1px solid #e4f0fa;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 25px rgba(55, 115, 170, 0.07);
+    transition: 0.2s;
+}
+
+.mission-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(55, 115, 170, 0.13);
+}
+
+.mission-icon,
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.green { background: #dcf9ed; }
+.purple { background: #eee7ff; }
+.pink { background: #ffe8f1; }
+.blue { background: #e4f1ff; }
+.yellow { background: #fff1bd; }
+
+.mission-info {
+    flex: 1;
+}
+
+.mission-info h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: #28558e;
+}
+
+.mission-info p {
+    margin: 0;
+    font-size: 12px;
+    color: #8398af;
+}
+
+.card-arrow {
+    font-size: 22px;
+    color: #78a2cc;
+}
+
+/* СТАТИСТИКА */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e4f0fa;
+    border-radius: 20px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    box-shadow: 0 7px 25px rgba(55, 115, 170, 0.06);
+}
+
+.stat-title {
+    display: block;
+    font-size: 11px;
+    color: #8298ae;
+    margin-bottom: 4px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 20px;
+    color: #28558e;
+}
+
+/* ДОСТИЖЕНИЕ */
+
+.achievement-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 25px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff9dc, #fff1b9);
+    border-radius: 22px;
+    border: 1px solid #f5e4a4;
+}
+
+.achievement-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    background: #ffd96a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+
+.achievement-text {
+    flex: 1;
+}
+
+.achievement-text span {
+    font-size: 11px;
+    color: #a48132;
+}
+
+.achievement-text h3 {
+    margin: 3px 0;
+    font-size: 19px;
+    color: #76591b;
+}
+
+.achievement-text p {
+    margin: 0;
+    font-size: 12px;
+    color: #94772f;
+}
+
+.achievement-button {
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: white;
+    color: #7a641f;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.site-footer {
+    background: white;
+    border-top: 1px solid #e2eef8;
+}
+
+.footer-inner {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #7990a8;
+    font-size: 12px;
+}
+
+.footer-inner strong {
+    color: #2853bd;
+}
+
+/* =========================================================
+   ТРЕНИРОВКИ — СПИСОК
+   ========================================================= */
+
+.page-heading {
+    margin: 25px 0;
+    padding: 30px 35px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #eaf8ff, #f3efff);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 35px rgba(60, 120, 170, 0.08);
+}
+
+.page-heading h1 {
+    margin: 3px 0 8px;
+    font-size: 34px;
+    color: #204b8d;
+    font-weight: 800;
+}
+
+.page-heading p {
+    margin: 0;
+    color: #6e89a6;
+    font-size: 14px;
+}
+
+.workout-character {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #d5efff, #e4dcff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 58px;
+}
+
+.workout-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.filter-button {
+    border: 1px solid #dfedf8;
+    background: white;
+    border-radius: 12px;
+    padding: 10px 17px;
+    color: #66829f;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-button:hover {
+    background: #eef7ff;
+    color: #3266c6;
+}
+
+.filter-button.active {
+    background: #3974dc;
+    color: white;
+    border-color: #3974dc;
+    box-shadow: 0 6px 15px rgba(57, 116, 220, 0.2);
+}
+
+.workouts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.workout-card {
+    background: white;
+    border: 1px solid #e3eef8;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(55, 115, 170, 0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.workout-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(55, 115, 170, 0.13);
+}
+
+.workout-image {
+    height: 145px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+}
+
+.green-workout { background: linear-gradient(135deg, #d9f8ec, #c9f0e7); }
+.blue-workout { background: linear-gradient(135deg, #dff3ff, #d7e8ff); }
+.purple-workout { background: linear-gradient(135deg, #eee5ff, #e1d8ff); }
+.pink-workout { background: linear-gradient(135deg, #ffe6f1, #ffdbe9); }
+.yellow-workout { background: linear-gradient(135deg, #fff5cc, #ffeab0); }
+.orange-workout { background: linear-gradient(135deg, #ffe6cf, #ffdbb5); }
+
+.workout-card-body {
+    padding: 20px;
+}
+
+.workout-level {
+    font-size: 10px;
+    color: #6a91b8;
+    font-weight: 700;
+}
+
+.workout-card h2 {
+    margin: 7px 0;
+    font-size: 18px;
+    color: #28558e;
+}
+
+.workout-card p {
+    margin: 0 0 15px;
+    min-height: 38px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8096ad;
+}
+
+.workout-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.workout-meta span {
+    padding: 7px 9px;
+    border-radius: 9px;
+    background: #f3f8fc;
+    color: #6e89a4;
+    font-size: 10px;
+}
+
+.workout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    border-radius: 12px;
+    background: #edf5ff;
+    color: #3165c5;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.workout-button:hover {
+    background: #3974dc;
+    color: white;
+}
+
+.safety-note {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+    padding: 17px 20px;
+    border-radius: 17px;
+    background: #eef8ff;
+    border: 1px solid #d9edfb;
+}
+
+.safety-icon {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: white;
+    font-size: 22px;
+}
+
+.safety-note strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #315c91;
+    font-size: 13px;
+}
+
+.safety-note p {
+    margin: 0;
+    color: #7892aa;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   ЭКРАН ТРЕНИРОВКИ
+   ========================================================= */
+
+.workout-page {
+    padding-top: 25px;
+    padding-bottom: 45px;
+}
+
+.workout-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-button,
+.back-link {
+    display: inline-block;
+    color: #4d7fc0;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.back-button:hover,
+.back-link:hover {
+    color: #2859b7;
+}
+
+.workout-progress-text {
+    padding: 8px 12px;
+    background: #edf5ff;
+    border-radius: 10px;
+    color: #5280b3;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.workout-title {
+    margin-bottom: 20px;
+}
+
+.workout-title h1 {
+    margin: 4px 0 7px;
+    font-size: 32px;
+    color: #204b8d;
+    font-weight: 800;
+}
+
+.workout-title p {
+    margin: 0;
+    color: #718ba7;
+    font-size: 13px;
+}
+
+.workout-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.video-area {
+    min-height: 380px;
+    background: white;
+    border: 1px solid #dfedf8;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(55, 115, 170, 0.08);
+}
+
+.video-placeholder {
+    height: 100%;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(145deg, #e7f7ff, #eeeaff);
+}
+
+.video-icon {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    background: white;
+    color: #3974dc;
+    font-size: 27px;
+    box-shadow: 0 10px 25px rgba(55, 100, 170, 0.15);
+}
+
+.video-placeholder h2 {
+    margin: 0 0 8px;
+    color: #28558e;
+    font-size: 21px;
+}
+
+.video-placeholder p {
+    max-width: 400px;
+    margin: 0 0 8px;
+    color: #718ba7;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.video-placeholder span {
+    color: #9aadc1;
+    font-size: 10px;
+}
+
+.workout-side {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.today-card {
+    padding: 22px;
+    background: white;
+    border: 1px solid #dfedf8;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(55, 115, 170, 0.06);
+}
+
+.today-card > span {
+    display: block;
+    margin-bottom: 14px;
+    color: #6485a5;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.equipment-item {
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 11px;
+    background: #f3f8fc;
+    color: #6483a2;
+    font-size: 11px;
+}
+
+.equipment-item:last-child {
+    margin-bottom: 0;
+}
+
+.character-message {
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #e8f8ff, #f2efff);
+}
+
+.mini-character {
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    font-size: 34px;
+}
+
+.character-message strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #315e98;
+    font-size: 13px;
+}
+
+.character-message p {
+    margin: 0;
+    color: #7891aa;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.timer-card {
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: white;
+    border: 1px solid #dfedf8;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(55, 115, 170, 0.06);
+}
+
+.timer-label {
+    color: #7590aa;
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.timer {
+    color: #2455a8;
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.timer-unit {
+    margin-top: 5px;
+    color: #91a5b9;
+    font-size: 11px;
+}
+
+.exercise-progress {
+    margin-bottom: 20px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #6d88a4;
+    font-size: 11px;
+}
+
+.progress-header strong {
+    color: #396bc0;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #e4eef7;
+}
+
+.progress-bar-workout {
+    width: 20%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #25c99d, #36aeea);
+    transition: width 0.3s;
+}
+
+.workout-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.control-button {
+    min-height: 46px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.secondary-control {
+    background: white;
+    color: #52769a;
+    border: 1px solid #dcebf7;
+}
+
+.secondary-control:hover {
+    background: #f0f7fd;
+}
+
+.pause-control {
+    min-width: 145px;
+    color: white;
+    background: linear-gradient(135deg, #26c99b, #2aafe5);
+    box-shadow: 0 8px 20px rgba(38, 185, 164, 0.2);
+}
+
+.pause-control:hover {
+    transform: translateY(-2px);
+}
+
+/* ЗАВЕРШЕНИЕ ТРЕНИРОВКИ */
+
+.completion-card {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 55px 35px;
+    text-align: center;
+    background: linear-gradient(145deg, #eef9ff, #f3efff);
+    border: 1px solid #dfedf8;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(55, 115, 170, 0.1);
+}
+
+.completion-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff1b8;
+    font-size: 45px;
+}
+
+.completion-card h1 {
+    margin: 8px 0;
+    color: #24528f;
+    font-size: 35px;
+    font-weight: 800;
+}
+
+.completion-card p {
+    margin: 0 auto 20px;
+    max-width: 450px;
+    color: #7891aa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.xp-reward {
+    display: inline-block;
+    margin: 10px 0 15px;
+    padding: 12px 22px;
+    border-radius: 15px;
+    background: #fff1bd;
+    color: #a07824;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.completion-character {
+    font-size: 70px;
+    margin: 5px 0 20px;
+}
+
+.completion-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   УРОКИ
+   ========================================================= */
+
+.lessons-page {
+    padding-top: 35px;
+    padding-bottom: 55px;
+}
+
+.lessons-heading {
+    max-width: 700px;
+    margin-bottom: 25px;
+}
+
+.lessons-heading h1 {
+    margin: 6px 0 10px;
+    color: #24518e;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.lessons-heading p {
+    margin: 0;
+    color: #718ba7;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.learning-note {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 22px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #eefaff, #f3efff);
+    border: 1px solid #e0edf8;
+}
+
+.learning-note-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: white;
+    font-size: 24px;
+}
+
+.learning-note strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #37659b;
+    font-size: 13px;
+}
+
+.learning-note p {
+    margin: 0;
+    color: #7d94aa;
+    font-size: 11px;
+}
+
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.lesson-card {
+    display: flex;
+    min-height: 205px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e1edf7;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(55, 115, 170, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(55, 115, 170, 0.1);
+}
+
+.lesson-image {
+    width: 125px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+.lesson-blue { background: linear-gradient(145deg, #dff5ff, #e8edff); }
+.lesson-purple { background: linear-gradient(145deg, #eee7ff, #f5e9ff); }
+.lesson-green { background: linear-gradient(145deg, #ddf8ed, #e8f9ef); }
+.lesson-orange { background: linear-gradient(145deg, #fff0d8, #ffe9e2); }
+.lesson-pink { background: linear-gradient(145deg, #ffe7f2, #f1eaff); }
+
+.lesson-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.lesson-number {
+    color: #79a0c4;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.lesson-content h2 {
+    margin: 5px 0 7px;
+    color: #315b93;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.lesson-content p {
+    margin: 0 0 15px;
+    color: #8197ad;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.lesson-button {
+    display: inline-block;
+    margin-top: auto;
+    padding: 12px 22px;
+    border-radius: 14px;
+    background: #6d7cff;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.lesson-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.lesson-button.secondary {
+    background: #eef1f8;
+    color: #344054;
+}
+
+/* =========================================================
+   СТРАНИЦА ОТДЕЛЬНОГО УРОКА
+   ========================================================= */
+
+.lesson-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+
+.lesson-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.lesson-header .lesson-number {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #e9e7ff;
+    color: #6558d3;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.lesson-header h1 {
+    margin: 0 0 15px;
+    font-size: 42px;
+    color: #26304a;
+}
+
+.lesson-intro {
+    max-width: 720px;
+    margin: 0 auto;
+    color: #667085;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.lesson-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.lesson-illustration,
+.lesson-text,
+.lesson-quiz {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(50, 60, 90, 0.08);
+}
+
+.lesson-illustration {
+    text-align: center;
+}
+
+.spine-placeholder {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 20px;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #dff7f1, #e9e7ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+}
+
+.spine-illustration {
+    width: 150px;
+    min-height: 300px;
+    margin: 10px auto;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 70px;
+    background: linear-gradient(180deg, #e8f8f5, #eeeaff);
+}
+
+.spine-dot {
+    width: 48px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #6558d3;
+    font-size: 22px;
+    box-shadow: 0 4px 10px rgba(50, 60, 90, 0.10);
+}
+
+.illustration-character {
+    font-size: 52px;
+    margin-top: -35px;
+    position: relative;
+}
+
+.lesson-illustration p,
+.lesson-text p {
+    color: #667085;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.lesson-text h2,
+.remember-card h2,
+.lesson-quiz h2 {
+    color: #26304a;
+    margin-top: 0;
+}
+
+.text-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.remember-card {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: #fff8dc;
+    border-radius: 28px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+}
+
+.remember-icon {
+    font-size: 35px;
+}
+
+.remember-card p {
+    margin-bottom: 0;
+    color: #667085;
+    line-height: 1.6;
+}
+
+.quiz-label {
+    color: #6558d3;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.quiz-description {
+    color: #667085;
+    margin-bottom: 20px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quiz-option {
+    border: 2px solid #e6e8f0;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.quiz-option:hover {
+    border-color: #8b82e8;
+    background: #f8f7ff;
+}
+
+.quiz-option:disabled {
+    cursor: default;
+}
+
+.quiz-option.correct {
+    border-color: #4caf8a;
+    background: #e8f8f1;
+}
+
+.quiz-option.wrong {
+    border-color: #e57373;
+    background: #fff0f0;
+}
+
+.quiz-result {
+    min-height: 25px;
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.quiz-result.success {
+    background: #e8f8f1;
+    color: #27845f;
+}
+
+.quiz-result.error {
+    background: #fff1f1;
+    color: #b84d4d;
+}
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* =========================================================
+   ИГРЫ
+   ========================================================= */
+
+.games-page,
+.game-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 70px;
+}
+
+.game-page {
+    max-width: 1000px;
+}
+
+.games-heading,
+.game-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.games-heading h1,
+.game-header h1 {
+    font-size: 42px;
+    margin: 15px 0;
+}
+
+.games-heading p,
+.game-header p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.game-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.game-image {
+    min-width: 130px;
+    height: 130px;
+    border-radius: 24px;
+    background: #eef8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+}
+
+.game-content {
+    flex: 1;
+}
+
+.game-number {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #6d7cff;
+    margin-bottom: 8px;
+}
+
+.game-content h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+}
+
+.game-content p {
+    margin: 0 0 18px;
+    line-height: 1.5;
+}
+
+.game-button {
+    border: none;
+    border-radius: 14px;
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #6d7cff;
+    color: white;
+}
+
+.game-button:hover {
+    transform: translateY(-2px);
+}
+
+.game-question {
+    background: white;
+    border-radius: 28px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.game-big-icon {
+    font-size: 80px;
+    margin-bottom: 15px;
+}
+
+.game-question h2 {
+    margin-bottom: 25px;
+}
+
+.game-options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.game-option {
+    border: none;
+    border-radius: 16px;
+    padding: 17px 20px;
+    background: #f1f5ff;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.game-option:hover {
+    transform: translateY(-2px);
+}
+
+.game-option:disabled {
+    cursor: default;
+}
+
+.game-option.correct {
+    background: #d9f7e5;
+}
+
+.game-option.wrong {
+    background: #ffe0e0;
+}
+
+.game-navigation {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.backpack-option.selected {
+    background: #d9f7e5;
+    transform: translateY(-2px);
+}
+
+.backpack-option:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+/* =========================================================
+   АДАПТИВНОСТЬ
+   ========================================================= */
+
+@media (max-width: 1250px) {
+    .logo {
+        min-width: 190px;
+    }
+
+    .logo-subtitle {
+        display: none;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+    }
+
+    .main-nav .nav-link {
+        padding-left: 9px;
+        padding-right: 9px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .hero-content {
+        padding: 35px;
+    }
+
+    .hero-character {
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .workouts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .site-header {
+        height: 72px;
+        min-height: 72px;
+    }
+
+    .header-inner {
+        height: 72px;
+        min-height: 72px;
+        gap: 10px;
+    }
+
+    main {
+        min-height: calc(100vh - 72px);
+    }
+
+    .logo {
+        min-width: auto;
+    }
+
+    .logo-title {
+        font-size: 17px;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+        gap: 3px;
+    }
+
+    .main-nav .nav-link {
+        min-height: 36px;
+        padding: 7px 9px;
+        font-size: 11px;
+    }
+
+    .profile-mini {
+        min-width: auto;
+        padding: 4px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .profile-avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+    .mission-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text {
+        max-width: 700px;
+    }
+
+    .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .workout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .lessons-grid,
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 800px) {
+    .video-area,
+    .video-placeholder {
+        min-height: 300px;
+    }
+
+    .lesson-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .page-heading {
+        padding: 25px 20px;
+    }
+
+    .page-heading h1 {
+        font-size: 28px;
+    }
+
+    .workout-character {
+        display: none;
+    }
+
+    .workout-filters {
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+
+    .filter-button {
+        white-space: nowrap;
+    }
+
+    .workouts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .site-header {
+        height: 64px;
+        min-height: 64px;
+    }
+
+    .header-inner {
+        height: 64px;
+        min-height: 64px;
+        gap: 8px;
+    }
+
+    main {
+        min-height: calc(100vh - 64px);
+        padding-top: 15px;
+    }
+
+    .logo-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    .logo-title {
+        font-size: 15px;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .main-nav .nav-link {
+        min-height: 34px;
+        height: 34px;
+        padding: 6px 8px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+
+    .main-nav .nav-link.active::after {
+        width: 4px;
+        height: 4px;
+        bottom: 2px;
+    }
+
+    .profile-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .hero-content {
+        padding: 28px 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 31px;
+    }
+
+    .hero-text p {
+        font-size: 14px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .btn-main,
+    .btn-secondary {
+        width: 100%;
+    }
+
+    .hero-character {
+        min-width: auto;
+    }
+
+    .character-circle {
+        width: 190px;
+        height: 190px;
+    }
+
+    .character {
+        font-size: 100px;
+    }
+
+    .speech-bubble {
+        right: -5px;
+        top: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievement-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 15px;
+    }
+
+    .completion-card {
+        margin: 20px 0;
+        padding: 40px 20px;
+    }
+
+    .completion-card h1 {
+        font-size: 28px;
+    }
+
+    .completion-buttons {
+        flex-direction: column;
+    }
+
+    .completion-buttons button {
+        width: 100%;
+    }
+
+    .lesson-page {
+        padding: 25px 16px 40px;
+    }
+
+    .lesson-header h1 {
+        font-size: 32px;
+    }
+
+    .lesson-navigation {
+        flex-direction: column;
+    }
+
+    .games-page,
+    .game-page {
+        padding: 25px 18px 50px;
+    }
+
+    .game-question {
+        padding: 25px 18px;
+    }
+
+    .games-heading h1,
+    .game-header h1 {
+        font-size: 30px;
+    }
+
+    .game-big-icon {
+        font-size: 60px;
+    }
+
+    .game-option {
+        font-size: 15px;
+    }
+
+    .game-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .lesson-card {
+        min-height: 180px;
+    }
+
+    .lesson-image {
+        width: 90px;
+        font-size: 35px;
+    }
+
+    .lesson-content {
+        padding: 15px;
+    }
+
+    .lesson-content h2 {
+        font-size: 15px;
+    }
+
+    .learning-note {
+        align-items: flex-start;
+    }
+
+    .workout-top {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .workout-title h1 {
+        font-size: 27px;
+    }
+
+    .workout-controls {
+        flex-direction: column;
+    }
+
+    .control-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .lessons-heading h1 {
+        font-size: 28px;
+    }
+}

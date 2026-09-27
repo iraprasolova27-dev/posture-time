@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{title}}</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         ШАПКА
+    ========================== -->
+
+{{> header}}
+
+
+    <!-- =========================
+         ЭКРАН ТРЕНИРОВКИ
+    ========================== -->
+
+    <main>
+
+        <div class="container workout-page">
+
+
+            <!-- ВЕРХНЯЯ ЧАСТЬ -->
+
+           <div class="workout-top">
+
+    <a
+        href="/workouts"
+        class="back-button"
+    >
+        ← Все тренировки
+    </a>
+
+    <span
+        id="exerciseCounter"
+        class="workout-progress-text"
+    >
+        Упражнение 1 из 5
+    </span>
+
+</div>
+
+
+            <!-- НАЗВАНИЕ -->
+
+<section class="workout-title">
+
+    <span
+        id="workoutName"
+        class="section-label"
+    >
+        Лёгкая разминка
+    </span>
+
+    <h1 id="exerciseTitle">
+        Потягивания
+    </h1>
+
+    <p id="exerciseDescription">
+        Спокойно потянись вверх и сделай
+        несколько плавных движений.
+    </p>
+
+</section>
+
+
+            <!-- =========================
+                 ОСНОВНОЙ ЭКРАН
+            ========================== -->
+
+            <section class="workout-layout">
+
+
+                <!-- ВИДЕО -->
+
+                <div class="video-area">
+
+                    <div class="video-placeholder">
+
+                        <div class="video-icon">
+                            ▶
+                        </div>
+
+                        <h2 id="videoTitle">
+    Видео упражнения
+</h2>
+
+<p id="videoDescription">
+    Здесь будет видео с правильным
+    выполнением упражнения.
+</p>
+
+                        <span>
+                            Видео добавим после подготовки
+                            разрешённого материала.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ПАНЕЛЬ СПРАВА -->
+
+                <aside class="workout-side">
+
+                    <div class="today-card">
+
+                        <span>
+                            Сегодня понадобится
+                        </span>
+
+                        <div class="equipment-item">
+                            ✓ Немного места
+                        </div>
+
+                        <div class="equipment-item">
+                            ✓ Удобная одежда
+                        </div>
+
+                        <div class="equipment-item">
+                            ✓ Хорошее настроение
+                        </div>
+
+                    </div>
+
+
+                    <div class="character-message">
+
+                        <div class="mini-character">
+                            🦊
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                У тебя получится!
+                            </strong>
+
+                            <p>
+                                Делаем спокойно
+                                и без спешки 💙
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- =========================
+                 ТАЙМЕР
+            ========================== -->
+
+            <section class="timer-card">
+
+                <div class="timer-label">
+                    Время упражнения
+                </div>
+
+                <div
+                    id="timer"
+                    class="timer"
+                >
+                    30
+                </div>
+
+                <div class="timer-unit">
+                    секунд
+                </div>
+
+            </section>
+
+
+            <!-- ПРОГРЕСС -->
+
+            <section class="exercise-progress">
+
+                <div class="progress-header">
+
+                    <span>
+                        Прогресс тренировки
+                    </span>
+
+                    <strong id="progressText">
+                        1 / 5
+                    </strong>
+
+                </div>
+
+                <div class="progress-bar-container">
+
+                    <div
+                        id="progressBar"
+                        class="progress-bar-workout"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 КНОПКИ
+            ========================== -->
+
+            <div class="workout-controls">
+
+                <button
+                    id="previousButton"
+                    class="control-button secondary-control"
+                >
+                    ← Назад
+                </button>
+
+                <button
+                    id="pauseButton"
+                    class="control-button pause-control"
+                >
+                    ⏸ Пауза
+                </button>
+
+                <button
+                    id="skipButton"
+                    class="control-button secondary-control"
+                >
+                    Пропустить →
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-inner">
+
+                <strong>
+                    Posture Time
+                </strong>
+
+                <span>
+                    Двигайся. Узнавай. Расти.
+                </span>
+
+                <span>
+                    ❤️ Забота о себе — это круто!
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT ТРЕНИРОВКИ
+    ========================== -->
+<script>
+
+    // =========================================
+    // ДАННЫЕ ТРЕНИРОВКИ
+    // =========================================
+
+    const exercises = [
+
+        {
+            name: 'Потягивания',
+            description:
+                'Спокойно потянись вверх и сделай несколько плавных движений.',
+            duration: 30
+        },
+
+        {
+            name: 'Движения руками',
+            description:
+                'Медленно подними руки и опусти их. Двигайся спокойно.',
+            duration: 20
+        },
+
+        {
+            name: 'Лёгкая разминка',
+            description:
+                'Сделай несколько мягких движений в удобном темпе.',
+            duration: 30
+        },
+
+        {
+            name: 'Активная пауза',
+            description:
+                'Немного подвигайся и отдохни от сидения.',
+            duration: 25
+        },
+
+        {
+            name: 'Спокойное завершение',
+            description:
+                'Заверши тренировку спокойными движениями и отдышись.',
+            duration: 20
+        }
+
+    ];
+
+
+    // =========================================
+    // ТЕКУЩЕЕ СОСТОЯНИЕ
+    // =========================================
+
+    let currentExercise = 0;
+
+    let timeLeft =
+        exercises[currentExercise].duration;
+
+    let isPaused = false;
+
+    let timer;
+
+
+    // =========================================
+    // ЭЛЕМЕНТЫ СТРАНИЦЫ
+    // =========================================
+
+    const timerElement =
+        document.getElementById('timer');
+
+    const pauseButton =
+        document.getElementById('pauseButton');
+
+    const exerciseCounter =
+        document.getElementById('exerciseCounter');
+
+    const exerciseTitle =
+        document.getElementById('exerciseTitle');
+
+    const exerciseDescription =
+        document.getElementById('exerciseDescription');
+
+    const workoutName =
+        document.getElementById('workoutName');
+
+    const videoTitle =
+        document.getElementById('videoTitle');
+
+    const videoDescription =
+        document.getElementById('videoDescription');
+
+    const progressText =
+        document.getElementById('progressText');
+
+    const progressBar =
+        document.getElementById('progressBar');
+
+    const previousButton =
+        document.getElementById('previousButton');
+
+    const skipButton =
+        document.getElementById('skipButton');
+
+
+    // =========================================
+    // ЗАГРУЗКА УПРАЖНЕНИЯ
+    // =========================================
+
+    function loadExercise() {
+
+        const exercise =
+            exercises[currentExercise];
+
+
+        // Сбрасываем таймер
+
+        timeLeft =
+            exercise.duration;
+
+
+        isPaused = false;
+
+
+        // Обновляем текст
+
+        exerciseCounter.textContent =
+            `Упражнение ${currentExercise + 1} из ${exercises.length}`;
+
+
+        workoutName.textContent =
+            'Лёгкая разминка';
+
+
+        exerciseTitle.textContent =
+            exercise.name;
+
+
+        exerciseDescription.textContent =
+            exercise.description;
+
+
+        videoTitle.textContent =
+            exercise.name;
+
+
+        videoDescription.textContent =
+            'Здесь будет видео с правильным выполнением упражнения.';
+
+
+        timerElement.textContent =
+            timeLeft;
+
+
+        pauseButton.textContent =
+            '⏸ Пауза';
+
+
+        progressText.textContent =
+            `${currentExercise + 1} / ${exercises.length}`;
+
+
+        const progress =
+            ((currentExercise + 1) / exercises.length) * 100;
+
+
+        progressBar.style.width =
+            `${progress}%`;
+
+
+        // Первое упражнение —
+        // кнопка "Назад" недоступна
+
+        if (currentExercise === 0) {
+
+            previousButton.disabled = true;
+
+            previousButton.style.opacity = '0.5';
+
+        } else {
+
+            previousButton.disabled = false;
+
+            previousButton.style.opacity = '1';
+
+        }
+
+    }
+
+
+    // =========================================
+    // ТАЙМЕР
+    // =========================================
+
+    function startTimer() {
+
+        clearInterval(timer);
+
+
+        timer = setInterval(() => {
+
+            if (isPaused) {
+                return;
+            }
+
+
+            timeLeft--;
+
+
+            timerElement.textContent =
+                timeLeft;
+
+
+            // Время закончилось
+
+            if (timeLeft <= 0) {
+
+                clearInterval(timer);
+
+                nextExercise();
+
+            }
+
+        }, 1000);
+
+    }
+
+
+    // =========================================
+    // СЛЕДУЮЩЕЕ УПРАЖНЕНИЕ
+    // =========================================
+
+    function nextExercise() {
+
+        if (
+            currentExercise <
+            exercises.length - 1
+        ) {
+
+            currentExercise++;
+
+            loadExercise();
+
+            startTimer();
+
+        } else {
+
+            finishWorkout();
+
+        }
+
+    }
+
+
+    // =========================================
+    // ПРЕДЫДУЩЕЕ УПРАЖНЕНИЕ
+    // =========================================
+
+    previousButton.addEventListener(
+        'click',
+        () => {
+
+            if (currentExercise > 0) {
+
+                currentExercise--;
+
+                loadExercise();
+
+                startTimer();
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // ПРОПУСТИТЬ
+    // =========================================
+
+    skipButton.addEventListener(
+        'click',
+        () => {
+
+            nextExercise();
+
+        }
+    );
+
+
+    // =========================================
+    // ПАУЗА
+    // =========================================
+
+    pauseButton.addEventListener(
+        'click',
+        () => {
+
+            isPaused = !isPaused;
+
+
+            if (isPaused) {
+
+                pauseButton.textContent =
+                    '▶ Продолжить';
+
+            } else {
+
+                pauseButton.textContent =
+                    '⏸ Пауза';
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // ЗАВЕРШЕНИЕ ТРЕНИРОВКИ
+    // =========================================
+
+    function finishWorkout() {
+
+        clearInterval(timer);
+
+
+        document.querySelector('.workout-page').innerHTML = `
+
+            <section class="completion-card">
+
+                <div class="completion-icon">
+                    🏆
+                </div>
+
+                <div class="section-label">
+                    Тренировка завершена
+                </div>
+
+                <h1>
+                    Отличная работа!
+                </h1>
+
+                <p>
+                    Ты прошла всю тренировку.
+                    Так держать!
+                </p>
+
+
+                <div class="xp-reward">
+                    ⭐ +100 XP
+                </div>
+
+
+                <div class="completion-character">
+                    🦊
+                </div>
+
+
+                <div class="completion-buttons">
+
+                    <button
+                        class="control-button pause-control"
+                        onclick="location.href='/workouts'"
+                    >
+                        Вернуться к тренировкам
+                    </button>
+
+                    <button
+                        class="control-button secondary-control"
+                        onclick="location.href='/'"
+                    >
+                        На главную
+                    </button>
+
+                </div>
+
+            </section>
+
+        `;
+
+    }
+
+
+    // =========================================
+    // ЗАПУСК
+    // =========================================
+
+    loadExercise();
+
+    startTimer();
+
+</script>
+
+</body>
+
+</html>

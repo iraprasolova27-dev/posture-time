@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Настройки — Posture Time</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .settings-page {
+            padding: 40px 0 60px;
+        }
+
+        .settings-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .settings-subtitle {
+            text-align: center;
+            color: #68758a;
+            margin-bottom: 35px;
+        }
+
+        .settings-card {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(60,70,100,0.08);
+        }
+
+        .settings-card h2 {
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .setting {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid #eef0f4;
+        }
+
+        .setting:last-child {
+            border-bottom: none;
+        }
+
+        .setting-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .setting-description {
+            color: #748096;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .switch {
+            position: relative;
+            width: 54px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #d9dde7;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            left: 4px;
+            top: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .slider {
+            background: #5d6eea;
+        }
+
+        input:checked + .slider::before {
+            transform: translateX(24px);
+        }
+
+        .save-button {
+            display: block;
+            margin: 30px auto 0;
+            border: none;
+            background: #5d6eea;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #4d5dd2;
+        }
+
+        .saved-message {
+            text-align: center;
+            margin-top: 15px;
+            color: #25834a;
+            font-weight: bold;
+            display: none;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 40px;
+            text-decoration: none;
+            color: #5d6eea;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            color: #4d5dd2;
+        }
+
+        @media (max-width: 700px) {
+
+            .setting {
+                align-items: flex-start;
+            }
+
+            .settings-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{{> header}}
+
+
+<main class="settings-page">
+
+    <div class="container">
+
+        <h1 class="settings-title">
+            ⚙️ Настройки
+        </h1>
+
+        <p class="settings-subtitle">
+            Настрой Posture Time под себя.
+        </p>
+
+
+        <!-- Звук -->
+
+        <div class="settings-card">
+
+            <h2>
+                🔊 Звук
+            </h2>
+
+            <div class="setting">
+
+                <div>
+
+                    <div class="setting-title">
+                        Музыка
+                    </div>
+
+                    <div class="setting-description">
+                        Включать фоновую музыку во время работы с сайтом.
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="musicSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div>
+
+                    <div class="setting-title">
+                        Звуковые эффекты
+                    </div>
+
+                    <div class="setting-description">
+                        Звуки при действиях, играх и достижениях.
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="soundSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- Интерфейс -->
+
+        <div class="settings-card">
+
+            <h2>
+                🎨 Интерфейс
+            </h2>
+
+            <div class="setting">
+
+                <div>
+
+                    <div class="setting-title">
+                        Анимации
+                    </div>
+
+                    <div class="setting-description">
+                        Показывать анимации персонажей и элементов интерфейса.
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="animationSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- Уведомления -->
+
+        <div class="settings-card">
+
+            <h2>
+                🔔 Уведомления
+            </h2>
+
+            <div class="setting">
+
+                <div>
+
+                    <div class="setting-title">
+                        Напоминания об активности
+                    </div>
+
+                    <div class="setting-description">
+                        Напоминать сделать небольшую активную паузу.
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="notificationSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="save-button"
+            id="saveButton"
+        >
+            💾 Сохранить настройки
+        </button>
+
+        <div
+            class="saved-message"
+            id="savedMessage"
+        >
+            ✓ Настройки сохранены
+        </div>
+
+
+        <a
+            href="/profile"
+            class="back-button"
+        >
+            ← Вернуться в профиль
+        </a>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    const savedSettings =
+        JSON.parse(
+            localStorage.getItem('postureTimeSettings') || '{}'
+        );
+
+
+    const musicSetting =
+        document.getElementById('musicSetting');
+
+    const soundSetting =
+        document.getElementById('soundSetting');
+
+    const animationSetting =
+        document.getElementById('animationSetting');
+
+    const notificationSetting =
+        document.getElementById('notificationSetting');
+
+
+    /*
+        Загружаем сохранённые настройки.
+    */
+
+    if (savedSettings.music !== undefined) {
+        musicSetting.checked = savedSettings.music;
+    }
+
+    if (savedSettings.sound !== undefined) {
+        soundSetting.checked = savedSettings.sound;
+    }
+
+    if (savedSettings.animations !== undefined) {
+        animationSetting.checked = savedSettings.animations;
+    }
+
+    if (savedSettings.notifications !== undefined) {
+        notificationSetting.checked = savedSettings.notifications;
+    }
+
+
+    /*
+        Сохраняем настройки.
+    */
+
+    document.getElementById('saveButton')
+        .addEventListener('click', function () {
+
+            const settings = {
+
+                music: musicSetting.checked,
+
+                sound: soundSetting.checked,
+
+                animations: animationSetting.checked,
+
+                notifications: notificationSetting.checked
+
+            };
+
+
+            localStorage.setItem(
+                'postureTimeSettings',
+                JSON.stringify(settings)
+            );
+
+
+            const message =
+                document.getElementById('savedMessage');
+
+
+            message.style.display = 'block';
+
+
+            setTimeout(function () {
+
+                message.style.display = 'none';
+
+            }, 2500);
+
+        });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Дневник — Posture Time</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .diary-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px 70px;
+        }
+
+        .diary-title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .diary-subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 35px;
+        }
+
+        .diary-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .diary-stat {
+            background: white;
+            border-radius: 22px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .diary-stat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .diary-stat-number {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .diary-stat-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .diary-card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .diary-card h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .diary-form-group {
+            margin-bottom: 22px;
+        }
+
+        .diary-form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .diary-form-group input,
+        .diary-form-group select,
+        .diary-form-group textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d9dee8;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .diary-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .mood-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mood-button {
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 15px;
+            padding: 12px 18px;
+            font-size: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .mood-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .mood-button.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+
+        .diary-submit {
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #6366f1;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .diary-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .diary-message {
+            display: none;
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 12px;
+            background: #ecfdf5;
+            color: #166534;
+            text-align: center;
+        }
+
+        .diary-entry {
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .diary-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .diary-entry-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .diary-entry-date {
+            font-weight: 800;
+        }
+
+        .diary-entry-mood {
+            font-size: 25px;
+        }
+
+        .diary-entry-info {
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .diary-entry-note {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .empty-diary {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 700px) {
+            .diary-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .diary-title {
+                font-size: 28px;
+            }
+
+            .diary-card {
+                padding: 20px;
+            }
+
+            .diary-entry-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ШАПКА САЙТА -->
+
+{{> header}}
+
+
+    <main class="diary-page">
+
+        <h1 class="diary-title">
+            📔 Мой дневник
+        </h1>
+
+        <p class="diary-subtitle">
+            Записывай свои тренировки, настроение и маленькие победы
+        </p>
+
+
+        <!-- СТАТИСТИКА -->
+
+        <section class="diary-stats">
+
+            <div class="diary-stat">
+
+                <div class="diary-stat-icon">
+                    🏃
+                </div>
+
+                <div class="diary-stat-number" id="workoutCount">
+                    0
+                </div>
+
+                <div class="diary-stat-label">
+                    активностей
+                </div>
+
+            </div>
+
+
+            <div class="diary-stat">
+
+                <div class="diary-stat-icon">
+                    ⏱️
+                </div>
+
+                <div class="diary-stat-number" id="activeTime">
+                    0
+                </div>
+
+                <div class="diary-stat-label">
+                    минут активности
+                </div>
+
+            </div>
+
+
+            <div class="diary-stat">
+
+                <div class="diary-stat-icon">
+                    ⭐
+                </div>
+
+                <div class="diary-stat-number" id="xpCount">
+                    0
+                </div>
+
+                <div class="diary-stat-label">
+                    XP
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ДОБАВИТЬ ЗАПИСЬ -->
+
+        <section class="diary-card">
+
+            <h2>
+                ➕ Новая запись
+            </h2>
+
+
+            <form id="diaryForm">
+
+
+                <div class="diary-form-group">
+
+                    <label for="diaryDate">
+                        Дата
+                    </label>
+
+                    <input
+                        type="date"
+                        id="diaryDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="diary-form-group">
+
+                    <label>
+                        Как ты себя чувствуешь?
+                    </label>
+
+
+                    <div class="mood-buttons">
+
+                        <button
+                            type="button"
+                            class="mood-button"
+                            data-mood="😀"
+                        >
+                            😀
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mood-button"
+                            data-mood="🙂"
+                        >
+                            🙂
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mood-button"
+                            data-mood="😐"
+                        >
+                            😐
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mood-button"
+                            data-mood="😕"
+                        >
+                            😕
+                        </button>
+
+                        <button
+                            type="button"
+                            class="mood-button"
+                            data-mood="🛑"
+                        >
+                            🛑
+                        </button>
+
+                    </div>
+
+
+                    <input
+                        type="hidden"
+                        id="selectedMood"
+                    >
+
+                </div>
+
+
+                <div class="diary-form-group">
+
+                    <label for="activity">
+                        Чем ты занимался?
+                    </label>
+
+                    <select id="activity" required>
+
+                        <option value="">
+                            Выбери активность
+                        </option>
+
+                        <option value="Тренировка">
+                            🏃 Тренировка
+                        </option>
+
+                        <option value="Разминка">
+                            🤸 Разминка
+                        </option>
+
+                        <option value="Прогулка">
+                            🚶 Прогулка
+                        </option>
+
+                        <option value="Спорт">
+                            ⚽ Спорт
+                        </option>
+
+                        <option value="Другая активность">
+                            ⭐ Другая активность
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="diary-form-group">
+
+                    <label for="duration">
+                        Сколько минут?
+                    </label>
+
+                    <input
+                        type="number"
+                        id="duration"
+                        min="1"
+                        max="300"
+                        placeholder="Например, 20"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="diary-form-group">
+
+                    <label for="note">
+                        Заметка
+                    </label>
+
+                    <textarea
+                        id="note"
+                        placeholder="Напиши, как всё прошло..."
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="diary-submit"
+                >
+                    Сохранить запись
+                </button>
+
+
+                <div
+                    class="diary-message"
+                    id="diaryMessage"
+                >
+                    Запись сохранена! ⭐
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ЗАПИСИ -->
+
+        <section class="diary-card">
+
+            <h2>
+                📋 Мои записи
+            </h2>
+
+
+            <div id="entriesList">
+
+                <div class="empty-diary">
+                    Пока записей нет. Добавь свою первую активность! 🌱
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+    const form = document.getElementById('diaryForm');
+    const dateInput = document.getElementById('diaryDate');
+    const selectedMoodInput = document.getElementById('selectedMood');
+    const entriesList = document.getElementById('entriesList');
+    const message = document.getElementById('diaryMessage');
+
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    const moodMap = {
+        great: '😀',
+        good: '🙂',
+        tired: '😐',
+        not_great: '😕',
+        bad: '🛑'
+    };
+
+    document.querySelectorAll('.mood-button').forEach(button => {
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.mood-button').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            button.classList.add('selected');
+            selectedMoodInput.value = button.dataset.mood;
+        });
+    });
+
+    async function loadDiary() {
+        try {
+            const response = await fetch('/api/diary', {
+                credentials: 'same-origin'
+            });
+
+            if (!response.ok) {
+                throw new Error('Не удалось загрузить дневник.');
+            }
+
+            const entries = await response.json();
+            renderEntries(entries);
+            updateDiaryStats();
+        } catch (error) {
+            console.error(error);
+            entriesList.innerHTML = `
+                <div class="empty-diary">
+                    Не удалось загрузить записи. Попробуй обновить страницу.
+                </div>
+            `;
+        }
+    }
+
+    async function updateDiaryStats() {
+        if (!window.PostureTime) return;
+
+        const stats = await window.PostureTime.refreshStats();
+
+        if (!stats) return;
+
+        document.getElementById('workoutCount').textContent =
+            stats.diaryEntries;
+
+        document.getElementById('activeTime').textContent =
+            stats.diaryMinutes;
+
+        document.getElementById('xpCount').textContent =
+            stats.xp;
+    }
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const date = dateInput.value;
+        const mood = selectedMoodInput.value;
+        const activity = document.getElementById('activity').value;
+        const duration = Number(document.getElementById('duration').value);
+        const note = document.getElementById('note').value.trim();
+
+        if (!mood) {
+            alert('Выбери настроение 🙂');
+            return;
+        }
+
+        const submitButton = form.querySelector('.diary-submit');
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch('/api/diary', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    date,
+                    mood,
+                    activity,
+                    duration,
+                    note
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Не удалось сохранить запись.');
+            }
+
+            form.reset();
+            dateInput.value = today;
+            selectedMoodInput.value = '';
+
+            document.querySelectorAll('.mood-button').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            message.textContent = 'Запись сохранена! ⭐ +20 XP';
+            message.style.display = 'block';
+
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2500);
+
+            await loadDiary();
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            submitButton.disabled = false;
+        }
+    });
+
+    function renderEntries(entries) {
+        if (!entries.length) {
+            entriesList.innerHTML = `
+                <div class="empty-diary">
+                    Пока записей нет. Добавь свою первую активность! 🌱
+                </div>
+            `;
+            return;
+        }
+
+        entriesList.innerHTML = entries.map(entry => `
+            <div class="diary-entry">
+                <div class="diary-entry-top">
+                    <div>
+                        <div class="diary-entry-date">
+                            ${formatDate(entry.date)}
+                        </div>
+                        <div class="diary-entry-info">
+                            ${escapeHtml(entry.activity || 'Активность')}
+                            · ${Number(entry.duration) || 0} мин.
+                        </div>
+                    </div>
+                    <div class="diary-entry-mood">
+                        ${moodMap[entry.mood] || '🙂'}
+                    </div>
+                </div>
+                ${entry.note ? `
+                    <div class="diary-entry-note">
+                        ${escapeHtml(entry.note)}
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString + 'T00:00:00');
+        return date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    document.addEventListener('posturetime:stats', function (event) {
+        const stats = event.detail;
+        if (!stats || !stats.authenticated) return;
+
+        document.getElementById('workoutCount').textContent = stats.diaryEntries;
+        document.getElementById('activeTime').textContent = stats.diaryMinutes;
+        document.getElementById('xpCount').textContent = stats.xp;
+    });
+
+    loadDiary();
+
+</script>
+
+</body>
+
+</html>

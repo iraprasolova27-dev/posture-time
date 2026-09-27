@@ -1,0 +1,237 @@
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/characters.css">
+
+{{> header}}
+
+
+<div class="lesson-page">
+
+    <a href="/lessons" class="back-link">
+        ← Назад к урокам
+    </a>
+
+
+    <section class="lesson-header">
+
+        <div class="lesson-number">
+            УРОК 1
+        </div>
+
+        <h1>Что такое позвоночник?</h1>
+
+        <p class="lesson-intro">
+            Позвоночник — важная часть нашего тела.
+            Он помогает нам поддерживать корпус,
+            двигаться и сохранять равновесие.
+        </p>
+
+    </section>
+
+
+    <section class="lesson-main">
+
+        <div class="lesson-illustration">
+
+            <div class="spine-illustration">
+
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+                <div class="spine-dot">●</div>
+
+            </div>
+
+            <div class="illustration-character">
+                🐼
+            </div>
+
+        </div>
+
+
+        <div class="lesson-text">
+
+            <div class="text-icon">
+                💙
+            </div>
+
+            <h2>Зачем нужен позвоночник?</h2>
+
+            <p>
+                Позвоночник состоит из множества позвонков,
+                расположенных друг над другом.
+            </p>
+
+            <p>
+                Он помогает поддерживать тело и участвует
+                в движениях: мы можем наклоняться,
+                поворачиваться, сидеть, стоять и ходить.
+            </p>
+
+            <p>
+                Позвоночник также защищает спинной мозг —
+                важную часть нервной системы.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="remember-card">
+
+        <div class="remember-icon">
+            💡
+        </div>
+
+        <div>
+
+            <h2>Запомни</h2>
+
+            <p>
+                Позвоночник — это целая система позвонков,
+                которая помогает поддерживать тело
+                и участвует в движении.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="lesson-quiz">
+
+        <div class="quiz-label">
+            🧠 ПРОВЕРИ СЕБЯ
+        </div>
+
+        <h2>
+            Для чего нужен позвоночник?
+        </h2>
+
+        <p class="quiz-description">
+            Выбери правильный вариант ответа.
+        </p>
+
+
+        <div class="quiz-options">
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Только для того, чтобы мы могли сидеть
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, true)">
+                Для поддержки тела и участия в движении
+            </button>
+
+            <button
+                class="quiz-option"
+                onclick="checkAnswer(this, false)">
+                Только для защиты головы
+            </button>
+
+        </div>
+
+
+        <div id="quiz-result" class="quiz-result"></div>
+
+    </section>
+
+
+    <div class="lesson-navigation">
+
+        <a href="/lessons" class="lesson-button secondary">
+            ← Все уроки
+        </a>
+
+        <a href="/lessons/2" class="lesson-button">
+            Следующий урок →
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function checkAnswer(button, correct) {
+
+        const result = document.getElementById('quiz-result');
+
+        const buttons = document.querySelectorAll('.quiz-option');
+
+        buttons.forEach(function(item) {
+            item.disabled = true;
+        });
+
+
+        if (correct) {
+
+            button.classList.add('correct');
+
+            result.innerHTML =
+                '🎉 Правильно! Ты отлично справился! ⭐ +10 XP';
+
+            result.classList.add('success');
+
+        } else {
+
+            button.classList.add('wrong');
+
+            result.innerHTML =
+                '🙂 Не совсем. Правильный ответ — второй вариант.';
+
+            result.classList.add('error');
+
+            buttons.forEach(function(item) {
+
+                if (item.textContent.includes(
+                    'Для поддержки тела'
+                )) {
+                    item.classList.add('correct');
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+<script src="/js/activity.js"></script>
+<script>
+    (function () {
+        let savedThisPage = false;
+
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.quiz-option');
+            if (!button || savedThisPage) return;
+
+            setTimeout(async function () {
+                if (!button.classList.contains('correct')) return;
+                if (!window.PostureTime) return;
+
+                savedThisPage = true;
+
+                try {
+                    await window.PostureTime.saveLesson(1);
+                } catch (error) {
+                    savedThisPage = false;
+                    console.log('Урок не сохранён:', error.message);
+                }
+            }, 0);
+        });
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<header class="site-header">
+
+    <div class="container">
+
+        <div class="header-inner">
+
+            <a href="/" class="logo">
+
+                <div class="logo-icon">
+                    PT
+                </div>
+
+                <div class="logo-text">
+
+                    <div class="logo-title">
+                        Posture Time
+                    </div>
+
+                    <div class="logo-subtitle">
+                        Двигайся. Узнавай. Расти.
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a
+                    href="/"
+                    class="nav-link"
+                    data-page="/"
+                    data-translate="home"
+                >
+                    Главная
+                </a>
+
+                <a
+                    href="/workouts"
+                    class="nav-link"
+                    data-page="/workouts"
+                    data-translate="workouts"
+                >
+                    Тренировки
+                </a>
+
+                <a
+                    href="/lessons"
+                    class="nav-link"
+                    data-page="/lessons"
+                    data-translate="lessons"
+                >
+                    Учимся
+                </a>
+
+                <a
+                    href="/games"
+                    class="nav-link"
+                    data-page="/games"
+                    data-translate="games"
+                >
+                    Игры
+                </a>
+
+                <a
+                    href="/diary"
+                    class="nav-link"
+                    data-page="/diary"
+                    data-translate="diary"
+                >
+                    Дневник
+                </a>
+
+                <a
+                    href="/progress"
+                    class="nav-link"
+                    data-page="/progress"
+                    data-translate="progress"
+                >
+                    Прогресс
+                </a>
+
+                <a
+                    href="/achievements"
+                    class="nav-link"
+                    data-page="/achievements"
+                    data-translate="achievements"
+                >
+                    Достижения
+                </a>
+
+                <a
+                    href="/profile"
+                    class="nav-link"
+                    data-page="/profile"
+                    data-translate="profile"
+                >
+                    Профиль
+                </a>
+
+                <a
+                    href="/settings"
+                    class="nav-link"
+                    data-page="/settings"
+                    data-translate="settings"
+                >
+                    Настройки
+                </a>
+
+            </nav>
+
+
+            <a
+                href="/profile"
+                class="profile-mini"
+                title="Открыть профиль"
+            >
+
+               <div class="profile-avatar character" id="headerAvatar">
+    🦊
+</div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Пользователь
+                    </strong>
+
+                    <span>
+                        Уровень 3
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const currentPath = window.location.pathname;
+
+        const navLinks =
+            document.querySelectorAll('.main-nav .nav-link');
+
+        navLinks.forEach(function (link) {
+
+            link.classList.remove('active');
+
+            const page =
+                link.getAttribute('data-page');
+
+            if (page === currentPath) {
+                link.classList.add('active');
+            }
+
+        });
+
+    });
+
+</script>
+<script src="/js/character.js"></script>
+<script src="/js/activity.js"></script>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Двигайся! — Posture Time</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Основные стили -->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <!-- Стили персонажей -->
+    <link
+        rel="stylesheet"
+        href="/css/characters.css"
+    >
+
+    <style>
+
+        /* ==========================================
+           ОСНОВА
+           ========================================== */
+
+        body {
+            background:
+                linear-gradient(
+                    180deg,
+                    #eef8ff 0%,
+                    #f8fcff 55%,
+                    #ffffff 100%
+                );
+
+            color: #183b63;
+        }
+
+        .game-page {
+            padding: 35px 0 60px;
+        }
+
+        /* ==========================================
+           ЗАГОЛОВОК
+           ========================================== */
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .game-header h1 {
+            margin-bottom: 8px;
+
+            font-size: 38px;
+            font-weight: 800;
+
+            color: #183f72;
+        }
+
+        .game-header p {
+            margin: 0;
+
+            color: #71879c;
+            font-size: 16px;
+        }
+
+        /* ==========================================
+           ИГРОВАЯ ПАНЕЛЬ
+           ========================================== */
+
+        .game-panel {
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            padding: 25px;
+
+            background: white;
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 15px 40px rgba(61, 126, 170, 0.12);
+        }
+
+        /* ==========================================
+           СТАТИСТИКА
+           ========================================== */
+
+        .game-stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .game-stat {
+            padding: 14px;
+
+            text-align: center;
+
+            background: #f3f8ff;
+
+            border-radius: 17px;
+        }
+
+        .game-stat span {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #8497aa;
+
+            font-size: 12px;
+        }
+
+        .game-stat strong {
+            color: #24537f;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        /* ==========================================
+           CANVAS
+           ========================================== */
+
+        .runner-wrapper {
+            position: relative;
+
+            width: 100%;
+
+            overflow: hidden;
+
+            border-radius: 23px;
+
+            background: #eef9ff;
+
+            border: 3px solid #d8ebf7;
+        }
+
+        #runnerCanvas {
+            display: block;
+
+            width: 100%;
+            height: auto;
+
+            touch-action: manipulation;
+        }
+
+        /* ==========================================
+           СООБЩЕНИЕ
+           ========================================== */
+
+        .game-message {
+            min-height: 28px;
+
+            margin: 16px 0;
+
+            text-align: center;
+
+            color: #617b92;
+
+            font-weight: 700;
+        }
+
+        /* ==========================================
+           КНОПКИ
+           ========================================== */
+
+        .game-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        .game-button {
+            border: 0;
+
+            padding: 12px 20px;
+
+            border-radius: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .game-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .game-button.primary {
+            background: #27c995;
+
+            color: white;
+
+            box-shadow:
+                0 7px 18px rgba(39, 201, 149, 0.2);
+        }
+
+        .game-button.secondary {
+            background: #e4f1ff;
+
+            color: #2864a5;
+        }
+
+        /* ==========================================
+           ПОДСКАЗКА
+           ========================================== */
+
+        .game-help {
+            margin-top: 18px;
+
+            padding: 15px 18px;
+
+            background: #f5f9ff;
+
+            border-radius: 17px;
+
+            color: #70879c;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           АДАПТИВ
+           ========================================== */
+
+        @media (max-width: 650px) {
+
+            .game-panel {
+                padding: 15px;
+            }
+
+            .game-header h1 {
+                font-size: 30px;
+            }
+
+            .game-stats {
+                gap: 8px;
+            }
+
+            .game-stat {
+                padding: 11px 5px;
+            }
+
+            .game-stat strong {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ==========================================
+     ШАПКА
+     ========================================== -->
+
+{{> header}}
+
+<!-- ==========================================
+     ОСНОВНОЕ
+     ========================================== -->
+
+<main>
+
+    <div class="container game-page">
+
+        <div class="game-header">
+
+            <h1>
+                🏃 Двигайся!
+            </h1>
+
+            <p>
+                Беги вперёд, перепрыгивай препятствия
+                и собирай звёздочки.
+            </p>
+
+        </div>
+
+        <div class="game-panel">
+
+            <!-- СТАТИСТИКА -->
+
+            <div class="game-stats">
+
+                <div class="game-stat">
+
+                    <span>
+                        Очки
+                    </span>
+
+                    <strong id="score">
+                        0
+                    </strong>
+
+                </div>
+
+                <div class="game-stat">
+
+                    <span>
+                        Рекорд
+                    </span>
+
+                    <strong id="best">
+                        0
+                    </strong>
+
+                </div>
+
+                <div class="game-stat">
+
+                    <span>
+                        Скорость
+                    </span>
+
+                    <strong id="speed">
+                        1
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- ИГРОВОЕ ПОЛЕ -->
+
+            <div class="runner-wrapper">
+
+                <canvas
+                    id="runnerCanvas"
+                    width="850"
+                    height="350"
+                ></canvas>
+
+            </div>
+
+            <!-- СООБЩЕНИЕ -->
+
+            <div
+                class="game-message"
+                id="gameMessage"
+            >
+                Нажми «Начать» и прыгай через препятствия!
+            </div>
+
+            <!-- КНОПКИ -->
+
+            <div class="game-buttons">
+
+                <button
+                    type="button"
+                    class="game-button primary"
+                    id="startButton"
+                >
+                    ▶ Начать
+                </button>
+
+                <button
+                    type="button"
+                    class="game-button secondary"
+                    id="restartButton"
+                >
+                    🔄 Заново
+                </button>
+
+            </div>
+
+            <!-- ПОДСКАЗКА -->
+
+            <div class="game-help">
+
+                ⬆️ Прыжок: <b>↑</b>, <b>W</b> или <b>Space</b>.
+                <br>
+                📱 На телефоне или планшете просто нажми
+                на игровое поле.
+                <br>
+                ⭐ Собирай звёзды и набирай больше очков!
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="/js/character.js"></script>
+
+<script>
+
+(function () {
+
+    "use strict";
+
+    /* ==========================================
+       ЭЛЕМЕНТЫ
+       ========================================== */
+
+    const canvas =
+        document.getElementById("runnerCanvas");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    const scoreElement =
+        document.getElementById("score");
+
+    const bestElement =
+        document.getElementById("best");
+
+    const speedElement =
+        document.getElementById("speed");
+
+    const messageElement =
+        document.getElementById("gameMessage");
+
+    const startButton =
+        document.getElementById("startButton");
+
+    const restartButton =
+        document.getElementById("restartButton");
+
+
+    /* ==========================================
+       НАСТРОЙКИ
+       ========================================== */
+
+    const groundY = 300;
+
+    let player;
+
+    let obstacles = [];
+
+    let stars = [];
+
+    let score = 0;
+
+    let best = Number(
+        localStorage.getItem("postureTimeRunnerBest") || 0
+    );
+
+    let gameSpeed = 5;
+
+    let running = false;
+
+    let animationId = null;
+
+    let lastTime = 0;
+
+    let obstacleTimer = 0;
+
+    let starTimer = 0;
+
+
+    /* ==========================================
+       РЕКОРД
+       ========================================== */
+
+    bestElement.textContent = best;
+
+
+    /* ==========================================
+       СОЗДАНИЕ ИГРОКА
+       ========================================== */
+
+    function createPlayer() {
+
+        player = {
+
+            x: 100,
+
+            y: groundY - 55,
+
+            width: 45,
+
+            height: 55,
+
+            velocityY: 0,
+
+            jumpPower: -14,
+
+            gravity: 0.65,
+
+            onGround: true
+
+        };
+
+    }
+
+
+    /* ==========================================
+       СБРОС
+       ========================================== */
+
+    function resetGame() {
+
+        score = 0;
+
+        gameSpeed = 5;
+
+        obstacles = [];
+
+        stars = [];
+
+        obstacleTimer = 0;
+
+        starTimer = 0;
+
+        lastTime = 0;
+
+        createPlayer();
+
+        updateStats();
+
+        draw();
+
+    }
+
+
+    /* ==========================================
+       СТАТИСТИКА
+       ========================================== */
+
+    function updateStats() {
+
+        scoreElement.textContent =
+            Math.floor(score);
+
+        bestElement.textContent =
+            best;
+
+        speedElement.textContent =
+            Math.max(
+                1,
+                Math.floor(gameSpeed / 5)
+            );
+
+    }
+
+
+    /* ==========================================
+       ПРЫЖОК
+       ========================================== */
+
+    function jump() {
+
+        if (!running) {
+            return;
+        }
+
+        if (!player.onGround) {
+            return;
+        }
+
+        player.velocityY =
+            player.jumpPower;
+
+        player.onGround =
+            false;
+
+    }
+
+
+    /* ==========================================
+       ПРЕПЯТСТВИЕ
+       ========================================== */
+
+    function createObstacle() {
+
+        const size =
+            35 + Math.random() * 15;
+
+        obstacles.push({
+
+            x: canvas.width + 20,
+
+            y: groundY - size,
+
+            width: size,
+
+            height: size,
+
+            emoji:
+                Math.random() > 0.5
+                    ? "🪨"
+                    : "🌳"
+
+        });
+
+    }
+
+
+    /* ==========================================
+       ЗВЁЗДОЧКА
+       ========================================== */
+
+    function createStar() {
+
+        stars.push({
+
+            x: canvas.width + 20,
+
+            y:
+                groundY -
+                70 -
+                Math.random() * 100,
+
+            width: 30,
+
+            height: 30
+
+        });
+
+    }
+
+
+    /* ==========================================
+       СТОЛКНОВЕНИЕ
+       ========================================== */
+
+    function collision(a, b) {
+
+        const padding = 8;
+
+        return (
+
+            a.x + padding <
+                b.x + b.width &&
+
+            a.x +
+                a.width -
+                padding >
+                b.x &&
+
+            a.y + padding <
+                b.y + b.height &&
+
+            a.y +
+                a.height -
+                padding >
+                b.y
+
+        );
+
+    }
+
+
+    /* ==========================================
+       РИСОВАНИЕ ФОНА
+       ========================================== */
+
+    function drawBackground() {
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        /* Небо */
+
+        ctx.fillStyle = "#eef9ff";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        /* Облака */
+
+        ctx.font = "42px Arial";
+
+        ctx.fillText(
+            "☁️",
+            100,
+            75
+        );
+
+        ctx.fillText(
+            "☁️",
+            620,
+            110
+        );
+
+
+        /* Земля */
+
+        ctx.fillStyle = "#c9ead5";
+
+        ctx.fillRect(
+            0,
+            groundY,
+            canvas.width,
+            canvas.height - groundY
+        );
+
+
+        /* Линия земли */
+
+        ctx.fillStyle = "#91cfae";
+
+        ctx.fillRect(
+            0,
+            groundY,
+            canvas.width,
+            5
+        );
+
+    }
+
+
+    /* ==========================================
+       РИСОВАНИЕ
+       ========================================== */
+
+    function draw() {
+
+        drawBackground();
+
+
+        /* Звёзды */
+
+        ctx.font = "30px Arial";
+
+        stars.forEach(function (star) {
+
+            ctx.fillText(
+                "⭐",
+                star.x,
+                star.y + star.height
+            );
+
+        });
+
+
+        /* Препятствия */
+
+        obstacles.forEach(function (obstacle) {
+
+            ctx.font = "45px Arial";
+
+            ctx.fillText(
+                obstacle.emoji,
+                obstacle.x,
+                obstacle.y + obstacle.height
+            );
+
+        });
+
+
+        /* Игрок */
+
+        ctx.font = "48px Arial";
+
+        ctx.fillText(
+            "🏃",
+            player.x,
+            player.y + player.height
+        );
+
+    }
+
+
+    /* ==========================================
+       ОБНОВЛЕНИЕ ИГРЫ
+       ========================================== */
+
+    function update(delta) {
+
+        /* Игрок */
+
+        player.velocityY +=
+            player.gravity;
+
+        player.y +=
+            player.velocityY;
+
+
+        if (
+            player.y >=
+            groundY - player.height
+        ) {
+
+            player.y =
+                groundY - player.height;
+
+            player.velocityY = 0;
+
+            player.onGround = true;
+
+        }
+
+
+        /* Таймер препятствий */
+
+        obstacleTimer += delta;
+
+        const obstacleDelay =
+            Math.max(
+                700,
+                1450 -
+                gameSpeed * 55
+            );
+
+
+        if (
+            obstacleTimer >= obstacleDelay
+        ) {
+
+            createObstacle();
+
+            obstacleTimer = 0;
+
+        }
+
+
+        /* Таймер звёзд */
+
+        starTimer += delta;
+
+
+        if (starTimer >= 1800) {
+
+            createStar();
+
+            starTimer = 0;
+
+        }
+
+
+        /* Движение препятствий */
+
+        obstacles.forEach(function (obstacle) {
+
+            obstacle.x -=
+                gameSpeed;
+
+        });
+
+
+        /* Движение звёзд */
+
+        stars.forEach(function (star) {
+
+            star.x -=
+                gameSpeed;
+
+        });
+
+
+        /* Проверяем препятствия */
+
+        for (
+            let i = obstacles.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            const obstacle =
+                obstacles[i];
+
+
+            if (
+                collision(
+                    player,
+                    obstacle
+                )
+            ) {
+
+                endGame();
+
+                return;
+
+            }
+
+
+            if (
+                obstacle.x +
+                obstacle.width <
+                -20
+            ) {
+
+                obstacles.splice(
+                    i,
+                    1
+                );
+
+            }
+
+        }
+
+
+        /* Проверяем звёзды */
+
+        for (
+            let i = stars.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            const star =
+                stars[i];
+
+
+            if (
+                collision(
+                    player,
+                    star
+                )
+            ) {
+
+                score += 25;
+
+                stars.splice(
+                    i,
+                    1
+                );
+
+                messageElement.textContent =
+                    "⭐ Отлично! +25 очков";
+
+                continue;
+
+            }
+
+
+            if (
+                star.x +
+                star.width <
+                -20
+            ) {
+
+                stars.splice(
+                    i,
+                    1
+                );
+
+            }
+
+        }
+
+
+        /* Очки */
+
+        score +=
+            delta * 0.008;
+
+
+        /* Постепенное увеличение скорости */
+
+        gameSpeed +=
+            delta * 0.00025;
+
+
+        updateStats();
+
+    }
+
+
+    /* ==========================================
+       ИГРОВОЙ ЦИКЛ
+       ========================================== */
+
+    function gameLoop(timestamp) {
+
+        if (!running) {
+            return;
+        }
+
+
+        if (!lastTime) {
+            lastTime = timestamp;
+        }
+
+
+        const delta =
+            Math.min(
+                timestamp - lastTime,
+                40
+            );
+
+
+        lastTime =
+            timestamp;
+
+
+        update(delta);
+
+        draw();
+
+
+        if (running) {
+
+            animationId =
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        }
+
+    }
+
+
+    /* ==========================================
+       НАЧАТЬ
+       ========================================== */
+
+    function startGame() {
+
+        if (running) {
+            return;
+        }
+
+
+        if (animationId !== null) {
+
+            cancelAnimationFrame(
+                animationId
+            );
+
+        }
+
+
+        resetGame();
+
+        running = true;
+
+        messageElement.textContent =
+            "Беги! Прыгай через препятствия! 🏃";
+
+
+        animationId =
+            requestAnimationFrame(
+                gameLoop
+            );
+
+    }
+
+
+    /* ==========================================
+       ЗАКОНЧИТЬ
+       ========================================== */
+
+    function endGame() {
+
+        if (window.PostureTime) {
+            window.PostureTime.saveGame(6, score).catch(function () {});
+        }
+
+        running = false;
+
+
+        if (animationId !== null) {
+
+            cancelAnimationFrame(
+                animationId
+            );
+
+            animationId = null;
+
+        }
+
+
+        const finalScore =
+            Math.floor(score);
+
+
+        if (
+            finalScore >
+            best
+        ) {
+
+            best =
+                finalScore;
+
+            localStorage.setItem(
+                "postureTimeRunnerBest",
+                best
+            );
+
+            messageElement.textContent =
+                "🏆 Новый рекорд! " +
+                finalScore +
+                " очков!";
+
+        } else {
+
+            messageElement.textContent =
+                "💫 Игра закончилась! " +
+                "Ты набрала " +
+                finalScore +
+                " очков.";
+
+        }
+
+
+        updateStats();
+
+
+        localStorage.setItem(
+            "postureTimePlayedGame",
+            "true"
+        );
+
+    }
+
+
+    /* ==========================================
+       КНОПКА «НАЧАТЬ»
+       ========================================== */
+
+    startButton.addEventListener(
+        "click",
+        function () {
+
+            startGame();
+
+        }
+    );
+
+
+    /* ==========================================
+       КНОПКА «ЗАНОВО»
+       ========================================== */
+
+    restartButton.addEventListener(
+        "click",
+        function () {
+
+            if (animationId !== null) {
+
+                cancelAnimationFrame(
+                    animationId
+                );
+
+                animationId = null;
+
+            }
+
+            running = false;
+
+            startGame();
+
+        }
+    );
+
+
+    /* ==========================================
+       КЛАВИАТУРА
+       ========================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            const key =
+                event.key.toLowerCase();
+
+
+            if (
+                key === "arrowup" ||
+                key === "w" ||
+                key === " "
+            ) {
+
+                event.preventDefault();
+
+                jump();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       КЛИК ПО ИГРОВОМУ ПОЛЮ
+       ========================================== */
+
+    canvas.addEventListener(
+        "pointerdown",
+        function () {
+
+            jump();
+
+        }
+    );
+
+
+    /* ==========================================
+       ПЕРВОНАЧАЛЬНЫЙ ЗАПУСК
+       ========================================== */
+
+    resetGame();
+
+})();
+
+</script>
+<script src="/js/character.js"></script>
+<script src="/js/game-music.js"></script>
+</body>
+
+</html>
